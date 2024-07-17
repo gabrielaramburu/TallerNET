@@ -1,0 +1,16 @@
+﻿@{
+    //establece la propiedad Title, la cual puede ser usada(leida) desde el template
+    ViewData["Title"] = "Ejemplo Mantenimiento de Vehiculos";
+}
+
+<h2>Index</h2>
+
+<p>Vista de vehiculos </p>
+
+<ul>
+    @for (int i = 0; i < (int)ViewData["Value"]!; i++)
+    {
+        <li>@ViewData["Name"]</li>
+    }
+</ul>
+

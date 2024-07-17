@@ -1,0 +1,73 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+    
+    Nota: posible maneras de comentar dentro del área del template
+
+     /* C# comment */
+    // Another C# comment
+
+    Fuera del área del template los comentarios tienen que ser html
+    <!-- HTML comment --> también funcionan los comentarios html
+*@
+
+<!-- permite trabajar con tipado el objeto Vehiculo -->
+@model IEnumerable<_01_3_webAppEjemplo.Models.Vehiculo>
+
+@{
+   
+}
+
+<h1>Lista de Vehículos</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <!-- El nombre del cabezal de la columna lo saca del nombre del atributo
+                Simplemente podría escribir el nombre de la columna como se hace en Año fabricación -->
+                @Html.DisplayNameFor(model => model.Matricula)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Marca)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Modelo)
+            </th>
+            <th>
+                <!-- A modo de ejemplo aqui simplemente escribrí el nombre de la columna  -->
+                Año de Fabricación
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        
+        @foreach (var item in Model)
+        {
+            // notese que Model está definido en @Model
+            <tr>
+                <td>
+                    <!-- notese que el compilador reconoce que Matricula es un atributo valido del modelo  -->
+                    @Html.DisplayFor(modelItem => item.Matricula)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Marca)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Modelo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AnioFabricacion)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Matricula">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Matricula">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Matricula">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
