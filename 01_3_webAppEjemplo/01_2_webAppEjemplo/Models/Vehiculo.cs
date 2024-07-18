@@ -14,6 +14,11 @@
             this.AnioFabricacion = anio;
         }
 
+        // es necesario tener un costructor por defecto para que el binding desde la vista al controlador funcione
+        public Vehiculo()
+        {
+
+        }
    
 
     }

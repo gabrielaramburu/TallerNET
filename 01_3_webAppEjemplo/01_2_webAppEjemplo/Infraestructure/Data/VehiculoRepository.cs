@@ -39,7 +39,11 @@ namespace _01_3_webAppEjemplo.Infraestructure.Data
 
         public Vehiculo Get(string matricula)
         {
-            return this._vehiculos[matricula];
+            Vehiculo respuesta;
+            //hay varias maneras de buscar un elemento en un map
+            //la otra alternativa es _vehiculos[matricula] pero hay que realizar manejo de excepciones
+            this._vehiculos.TryGetValue(matricula, out respuesta);
+            return respuesta;
         }
 
         public IList<Vehiculo> GetVehiculos()

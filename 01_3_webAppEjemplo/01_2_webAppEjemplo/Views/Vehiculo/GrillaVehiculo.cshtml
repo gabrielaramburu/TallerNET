@@ -19,7 +19,9 @@
 }
 
 <h1>Lista de Vehículos</h1>
-
+<p>
+    <a asp-action="Crear">Crear nuevo Vehículo</a>
+</p>
 <table class="table">
     <thead>
         <tr>
@@ -61,9 +63,13 @@
                     @Html.DisplayFor(modelItem => item.AnioFabricacion)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Matricula">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Matricula">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Matricula">Delete</a>
+                    <!-- obervar que no se indica el asp-controller ya que se asume el controller de la vista actual -->
+                    <a asp-action="Editar" asp-route-id="@item.Matricula">Editar</a> |
+                    <a asp-action="Ver" asp-route-id="@item.Matricula">Ver</a> |
+                    <a asp-action="Borrar" asp-route-id="@item.Matricula">Borrar</a>
+
+                    <!-- observar como se generar los link en el codigo html renderizado
+                    <a href="/Vehiculo/Borrar/BAA%201111">Borrar</a> -->
                 </td>
             </tr>
         }

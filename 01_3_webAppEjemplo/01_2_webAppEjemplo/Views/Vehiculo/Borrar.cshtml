@@ -1,0 +1,41 @@
+﻿@model _01_3_webAppEjemplo.Models.Vehiculo
+
+<h1>Delete</h1>
+
+<h3>¿Esta seguro que quier borrar el vehiculo?</h3>
+<div>
+    <h4>Movie</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Matricula)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Matricula)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Marca)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Marca)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Modelo)
+        </dt>
+        <dt class="col-sm-10">
+            @Html.DisplayFor(model => model.Modelo)
+        </dt>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AnioFabricacion)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AnioFabricacion)
+        </dd>
+    </dl>
+    
+    <form asp-action="ConfirmarBorrado">
+        <input type="hidden" asp-for="Matricula" />
+        <input type="submit" value="Borrar" class="btn btn-danger" /> |
+        <a asp-action="GetAllVehiculos">Volver</a>
+    </form>
+</div>

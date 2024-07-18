@@ -27,6 +27,10 @@ app.UseRouting();
 app.UseAuthorization();
 
 // establece como es el formato de enrrutamiento (desde request hacia el action)
+// por ejemplo:
+// si el request es https://localhost:7144/Vehiculo/Ver/BAA%203333
+// se asume que el controlador será Vehiculo, el action será Ver (Index en caso de que no se envíe nada y el id será BAA3333
+// enrutamiento mediante conveción
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
