@@ -1,0 +1,2 @@
+﻿Esto es una archivo de texto que tiene como finalidad probar el pipeline
+implementado como ejemplo.
