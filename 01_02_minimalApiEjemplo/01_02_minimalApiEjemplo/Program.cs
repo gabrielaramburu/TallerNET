@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//Configuro el contenedor de dependencias para que cree injecte la misma instancia (Singleton) cada vez que
+//Configuro el contenedor de dependencias para que injecte la misma instancia (Singleton) cada vez que
 //lo requiera.
 builder.Services.AddSingleton<IClienteRepository, ClienteRepository>();
 
@@ -14,8 +14,10 @@ var app = builder.Build();
 //MapGet agrega un endpoint de tipo GET con un respectivo patron de ruteo
 app.MapGet("/", () => "Hello World!");
 
+//curl https://localhost:7286/saludar
 app.MapGet("/saludar", () => "Hola, como estás?");
 
+//curl https://localhost:7286/clientes
 app.MapGet("/clientes", (IClienteRepository cliRepo) => 
 {
     //Observar como estoy utilizando una instancia inyectada por el contenedor

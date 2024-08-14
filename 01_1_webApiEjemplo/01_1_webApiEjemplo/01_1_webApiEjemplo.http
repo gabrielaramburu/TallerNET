@@ -1,6 +1,6 @@
 @_01_1_webApiEjemplo_HostAddress = http://localhost:5264
 
-GET {{_01_1_webApiEjemplo_HostAddress}}/weatherforecast/
+GET {{_01_1_webApiEjemplo_HostAddress}}/api/vehiculos/
 Accept: application/json
 
 ###

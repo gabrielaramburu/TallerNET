@@ -2,6 +2,9 @@ using _01_1_webApiEjemplo.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// documentación clase Builder
+// https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.builder.webapplicationbuilder?view=aspnetcore-8.0
+
 //Agrego logger
 builder.Logging.AddConsole();
 
@@ -18,6 +21,8 @@ builder.Services.AddMvc().AddControllersAsServices();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.builder.webapplication?view=aspnetcore-8.0
+// Informción clas
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

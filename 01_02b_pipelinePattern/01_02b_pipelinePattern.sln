@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_02b_pipelinePattern", "01_02b_pipelinePattern\01_02b_pipelinePattern.csproj", "{FDA7172E-147B-4C56-98A9-C41E980B632A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_02c_pipelineEstiloFuncional", "01_02c_pipelineEstiloFuncional\01_02c_pipelineEstiloFuncional.csproj", "{75B7D844-36D0-4F0E-9E51-9EE54E627D81}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{FDA7172E-147B-4C56-98A9-C41E980B632A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDA7172E-147B-4C56-98A9-C41E980B632A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDA7172E-147B-4C56-98A9-C41E980B632A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75B7D844-36D0-4F0E-9E51-9EE54E627D81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75B7D844-36D0-4F0E-9E51-9EE54E627D81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75B7D844-36D0-4F0E-9E51-9EE54E627D81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75B7D844-36D0-4F0E-9E51-9EE54E627D81}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

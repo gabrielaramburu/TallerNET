@@ -6,7 +6,7 @@ using System.Xml.Linq;
 namespace _01_1_webApiEjemplo.Controllers
 {
     [ApiController] //Esto es un atributo que es utilizada en tiempo de ejecución
-                    //para agregar comportamiento a la clase (idem to anotacion en java)    
+                    //para agregar comportamiento a la clase (idem anotacion en java)    
                     //Indica que el controlador responde a peticiones web
   
     [Route("api/vehiculos")]
@@ -23,6 +23,11 @@ namespace _01_1_webApiEjemplo.Controllers
             this._vehiculoList = new List<Vehiculo>();
             this._vehiculoList.Add(new Vehiculo(1, "BAA 1234", "Ford"));
             this._vehiculoList.Add(new Vehiculo(2, "BAA 5555", "Nissan"));
+            this._vehiculoList.Add(new Vehiculo(3, "BAA 6666", "Nissan"));
+            this._vehiculoList.Add(new Vehiculo(4, "BAA 7777", "XXX"));
+            this._vehiculoList.Add(new Vehiculo(5, "BAA 88888", "XXX"));
+            this._vehiculoList.Add(new Vehiculo(5, "BAA 99999", "XXX"));
+
         }
 
         [HttpGet] // endpoit asociado al metodo GET
@@ -35,7 +40,7 @@ namespace _01_1_webApiEjemplo.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")] //obtendo parámetro desde la url
+        [Route("{id}")] //obtengo parámetro desde la url
         public ActionResult<Vehiculo> GetById(int id)
         {
             _logger.LogInformation($"Retorno vehiculo en posicion {id}"); // formato de interpolación de cadenas

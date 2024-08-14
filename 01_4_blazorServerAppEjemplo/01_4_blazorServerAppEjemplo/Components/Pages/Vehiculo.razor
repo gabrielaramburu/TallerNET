@@ -1,0 +1,28 @@
+﻿@page "/vehiculos"
+@rendermode InteractiveServer
+<h3>Vehículo</h3>
+
+Este botón demuestra los modos de renderizado
+
+@* @onclick enlaza el evento click del boton con una función cualquiera *@ 
+<button @onclick="Ejecutar">Mostrar Mensaje</button>
+
+<span>@variableCualquiera</span>
+@code {
+    string variableCualquiera = "";
+    void Ejecutar()
+    {
+        variableCualquiera = "Ese mensaje se muestra si el modo interactivo esta activado";
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
