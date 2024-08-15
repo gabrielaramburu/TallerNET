@@ -8,7 +8,7 @@ namespace _01_02b_pipelinePattern.pipelinepattern.pipelineImpl
 {
     internal class PasoConvertirMayuscula : IPipellinePaso
     {
-        public void hacerAglo(IContexto contexto)
+        public void hacerAlgo(IContexto contexto)
         {
             String textoNuevo = ((InfoTexto)contexto).Texto.ToUpper();
             ((InfoTexto)contexto).Texto = textoNuevo;

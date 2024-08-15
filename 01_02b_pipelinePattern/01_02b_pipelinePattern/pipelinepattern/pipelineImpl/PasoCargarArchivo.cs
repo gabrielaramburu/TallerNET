@@ -8,7 +8,7 @@ namespace _01_02b_pipelinePattern.pipelinepattern.pipelineImpl
 {
     internal class PasoCargarArchivo : IPipellinePaso
     {
-        public void hacerAglo(IContexto contexto)
+        public void hacerAlgo(IContexto contexto)
         {
             
             String camino = @"C:\workspace\tallerNET\01_02b_pipelinePattern\01_02b_pipelinePattern\pipelinepattern\pipelineImpl\PruebaPipeLine.txt";

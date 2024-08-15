@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // registro repositorio de vehiculos como Singleton
 builder.Services.AddSingleton<IVehiculoRepository, VehiculoRepository>();
 
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -30,7 +31,7 @@ app.UseAuthorization();
 // por ejemplo:
 // si el request es https://localhost:7144/Vehiculo/Ver/BAA%203333
 // se asume que el controlador será Vehiculo, el action será Ver (Index en caso de que no se envíe nada y el id será BAA3333
-// enrutamiento mediante conveción
+// enrutamiento mediante convención
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

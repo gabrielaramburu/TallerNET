@@ -2,7 +2,7 @@
 using _01_02c_pipelineEstiloFuncional;
 using _01_02c_pipelineEstiloFuncional.pipeline;
 
-new EjemploEstiloFuncional().probar();
+//new EjemploEstiloFuncional().probar();
 
 
 PipeLineEstiloFuncional pipeLine= new PipeLineEstiloFuncional();
@@ -24,7 +24,7 @@ pipeLine.AgregarEndPoint(new Endpoint("/casoC", (string s) => {
 
 // cada vez que recibo un request ejecuto el pipeLine pasando como parámetro
 // la urlDestino
-pipeLine.ProcesarRequestEntrante("/casoA");
+pipeLine.ProcesarRequestEntrante("/casoB");
 
 
 

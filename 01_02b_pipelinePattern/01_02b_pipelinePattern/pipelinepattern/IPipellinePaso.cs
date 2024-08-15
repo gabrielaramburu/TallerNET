@@ -15,6 +15,6 @@ namespace _01_02b_pipelinePattern.pipelinepattern
 
         //el método hacer algo contedrá la implementación de la funcionalidad
         //que queremos que el paso concreto realice
-        void hacerAglo(IContexto contexto);
+        void hacerAlgo(IContexto contexto);
     }
 }

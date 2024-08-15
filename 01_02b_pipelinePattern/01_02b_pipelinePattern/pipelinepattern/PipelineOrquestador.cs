@@ -28,7 +28,7 @@ namespace _01_02b_pipelinePattern.pipelinepattern
             {
                 //aca es donde se ve la "fuerza" de la interface
                 Console.WriteLine("Ejecutando paso");
-                paso.hacerAglo(this._contexto);
+                paso.hacerAlgo(this._contexto);
                 
             }
             Console.WriteLine("Fin pipeline");

@@ -8,7 +8,7 @@ namespace _01_02b_pipelinePattern.pipelinepattern.pipelineImpl
 {
     internal class PasoGenerarArchivoSalida : IPipellinePaso
     {
-        public void hacerAglo(IContexto contexto)
+        public void hacerAlgo(IContexto contexto)
         {
             
             String archivoSalida = @"c:\Users\Gabriel Aramburu\Salida.txt";
