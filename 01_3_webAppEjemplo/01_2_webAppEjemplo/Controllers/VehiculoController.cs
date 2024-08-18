@@ -30,7 +30,7 @@ namespace _01_2_webAppEjemplo.Controllers
             return View("GrillaVehiculo", this._vehiculoRepository.GetVehiculos());
         }
 
-        // Este action se llama al realizar click desde el link Editar
+        // Este action se llama al realizar click desde el link Ver
         [HttpGet]
         [Route("Ver/{matricula}")]
         public IActionResult Ver(string matricula)
