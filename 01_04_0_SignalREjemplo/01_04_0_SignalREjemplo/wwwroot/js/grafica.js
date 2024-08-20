@@ -1,12 +1,15 @@
 ﻿"use strict";
 let chart;
 
-//Tengo que configurar en Program.cd que existe un hub (server side SiganlR)
+//Este js se ejecuta del lado del cliente
+
+//Para que esto funcione, tengo que configurar en Program.cs que existe un hub (server side SiganlR)
 //que se llama /ejemploGrafica
 var connection = new signalR.HubConnectionBuilder().withUrl("/ejemploGrafica").build();
 
 
-//recivo mensajes desde el servidor
+//recibo mensajes desde el servidor
+//este método se ejecuta cuando SignalR recibe un mensaje de tipo "CambioValorGrafica" desde el servidor
 connection.on("CambioValorGrafica", function (valor1, valor2, valor3) {
     console.log("Valores obtenidos:" + valor1 + "," + valor2 + "," + valor3);
     //el siguiente codigo simplemente dibuja una grafica

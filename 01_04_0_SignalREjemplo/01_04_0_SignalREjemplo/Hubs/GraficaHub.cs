@@ -6,6 +6,7 @@ namespace _01_04_0_SignalREjemplo.Hubs
     //Notar que hereda de Hub
     public class GraficaHub: Hub
     {
-       //en este ejemplo no recibo datos del cliente, por eso no tiene métodos
+       //En este ejemplo sencillo, los clientes no envian mensajes al servidor
+       //por eso esta clase no tiene métodos
     }
 }

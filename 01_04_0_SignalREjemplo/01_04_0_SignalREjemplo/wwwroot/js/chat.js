@@ -24,6 +24,7 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     var user = document.getElementById("userInput").value;
     var message = document.getElementById("messageInput").value;
     //envío mensaje al servidor
+    //Notese que en el Hub esta implementado el metodo SendMessage
     connection.invoke("SendMessage", user, message).catch(function (err) {
         return console.error(err.toString());
     });

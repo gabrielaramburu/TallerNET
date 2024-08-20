@@ -28,19 +28,23 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
-//endopoint del chat
-//observar que en el js que se descarga en el cliente, se apunta a dicho endpoint
-//las clases Hub son de tipo transient, es decir, se crea una nueva instancia cada vez
+//Hub de Chat
+//observar que en chat.js que se descarga en el cliente, se apunta a dicho endpoint
+//Las clases Hub son de tipo transient, es decir, se crea una nueva instancia cada vez
 //que un cliente realice un invocación al servidor.
 //Por ese motivo no se puede gurdar estado en las mismas
 app.MapHub<ChatHub>("/miChat");
 
+//puedo tener tantos hub como quiera
+//Hub de grafico.
 app.MapHub<GraficaHub>("/ejemploGrafica");
 
+//Por cuestiones de simplicidad implemento una Minimal Api
 //curl https://localhost:7159/lanzarEvento
 app.MapGet("/lanzarEvento", (IHubContext<GraficaHub> hubContext) =>
 {
-    
+    //Para poder enviar mensajes desde el servidor a los clientes necesita acceder al hub
+    //En este caso, le pido al contenedor que me inyecte la instancia del Hub
     int valor = new Random().Next(100);
     int valor2 = new Random().Next(100);
     int valor3 = new Random().Next(100);
