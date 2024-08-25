@@ -1,0 +1,152 @@
+﻿@page "/" 
+<!-- notar como la barra determina que esta página sea la pagina por defecto -->
+@model _01_04_1_SignalREjemplosVarios.Pages.LoginConVerificacionModel
+@{
+    Layout = null;
+}
+
+<!-- El siguiente codigo fue generado por v0
+    https://v0.dev/chat/m0uKEDV4OrS
+-->
+<!-- del lado del cliente necesito la librería de signalr -->
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .login-form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .verification-message {
+            margin-top: 1rem;
+            padding: 0.5rem;
+            background-color: #d4edda;
+            color: #155724;
+            border-radius: 4px;
+            text-align: center;
+            display: none;
+        }
+        .processing {
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            border-top: 2px solid #007bff;
+            animation: spin 1s linear infinite;
+            margin-right: 0.5rem;
+        }
+        <!-- @@keyframes es un elementos de css, sin embargo como empieza con un @@, el compilador
+        asume que es un componenete de Razor y da error porque lo desconoce,
+        , por lo tanto tenemos que usar doble @@
+        La primer @@ actua como carcter de escape indicando que lo que viene a continuación
+        no se interprete -->
+
+        @@keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-form">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit" id="loginButton">Login</button>
+        </form>
+        <div id="verificationMessage" class="verification-message">
+            A verification email was sent to your inbox.
+        </div>
+    </div>
+
+    <script>
+        var connection = new signalR.HubConnectionBuilder().withUrl("/login").build();
+        connection.start().then(function () {
+            //en este ejemplo no hago nada cuando me conecto
+        }).catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        //Este metodo se ejecuta cuando se invoca desde el Servidor
+        connection.on("VerificacionOk", function (usuario) {
+            console.info("Me invocaron desde el servidor, usuario:" + usuario);
+            window.location.href = "https://localhost:7269/PaginaBienvenida";
+        });
+        
+
+        const loginForm = document.getElementById('loginForm');
+        const loginButton = document.getElementById('loginButton');
+        const verificationMessage = document.getElementById('verificationMessage');
+
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            loginButton.disabled = true;
+            loginButton.innerHTML = '<span class="processing"></span>Processing';
+
+            verificationMessage.style.display = 'block';
+            // Aca tengo que mandar un mensaje al servidor notificando que un usuario se quiere loggear
+            var email = document.getElementById("email").value;
+            var pass = document.getElementById("password").value;
+
+            console.info("Envio mensaje al Hub");
+            //Login es un metodo del hub al cual me conecto
+            connection.invoke("Login", email, pass).catch(function (err) {
+                return console.error(err.toString());
+            });
+            
+        });
+    </script>
+</body>
