@@ -5,13 +5,13 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 // See https://aka.ms/new-console-template for more information
 
-primerCaso();
-segundoCaso();
-tercerCaso();
-cuartoCaso();
+//primerCaso();
+//segundoCaso();
+//tercerCaso();
+//cuartoCaso();
 
-quintoCaso();
-sextoCaso();
+//quintoCaso();
+//sextoCaso();
 casoSeptimo();
 
 
@@ -114,7 +114,7 @@ void quintoCaso()
     _tareas.Remove(tarea);
     medidor.Stop();
 
-    Console.WriteLine($"Tiempo: {medidor.Elapsed.TotalMilliseconds} ms");
+    Console.WriteLine($"Tiempo: {medidor.Elapsed.TotalSeconds} ms");
 }
 
 /* Caso correcto, solo busco una vez
@@ -132,7 +132,7 @@ void sextoCaso()
     _tareas.Remove(new Tarea2(9998,""));
     medidor.Stop();
 
-    Console.WriteLine($"Tiempo: {medidor.Elapsed.TotalMilliseconds} ms");
+    Console.WriteLine($"Tiempo: {medidor.Elapsed.TotalSeconds} ms");
 }
 
 /* Un Dictionario o Map, es una estructura que me permite almacenar valor
@@ -152,19 +152,22 @@ Es una estructura muy usuada y muy eficiente.
 void casoSeptimo()
 {
     Console.WriteLine("*** Inicio Caso septimo");
-    Dictionary<int, Tarea> _tareas = new Dictionary<int, Tarea>();
+    IDictionary<int, Tarea> _tareas = new Dictionary<int, Tarea>();
     _tareas.Add(100, new Tarea(100,"Tarea100"));
     _tareas.Add(5000, new Tarea(5000, "Tarea5000"));
     _tareas.Add(6000, new Tarea(6000, "Tarea6000"));
 
+    //esta instrucción es de O(1)
     Console.WriteLine(_tareas[6000]);
 
     Console.WriteLine("Lista de claves");
+    //esta instrucción es de O(n)
     foreach (int key in _tareas.Keys)
     {
         Console.WriteLine(key);
     }
     Console.WriteLine("Lista de valores");
+    //esta instrucción es de O(n)
     foreach (Tarea tarea in _tareas.Values)
     {
         Console.WriteLine(tarea);

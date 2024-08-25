@@ -49,6 +49,7 @@ app.MapGet("/lanzarEvento", (IHubContext<GraficaHub> hubContext) =>
     int valor2 = new Random().Next(100);
     int valor3 = new Random().Next(100);
 
+    
     //envio un mensaje a todos los clientes que esten conectados al Hub
     //Del lado del cliente, tengo que tener un js con la librería SignlR 
     //configurada para que escuche un mensaje con el nombre CambioValorGrafica
