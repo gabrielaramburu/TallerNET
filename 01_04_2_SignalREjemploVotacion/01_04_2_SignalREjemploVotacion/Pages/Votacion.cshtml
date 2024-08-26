@@ -1,0 +1,315 @@
+﻿@page "/"
+@model _01_04_2_SignalREjemploVotacion.Pages.VotacionModel
+@{
+    Layout = null;
+}
+
+<!-- del lado del cliente necesito la librería de signalr -->
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best Online AI Tools Voting Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 10px;
+            background-color: #f0f0f0;
+            font-size: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .progress-container {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            display: none; /* Hide by default */
+        }
+
+        .tool {
+            margin-bottom: 5px;
+        }
+
+        .tool-name {
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
+        .progress-bar {
+            background-color: #e0e0e0;
+            height: 15px;
+            border-radius: 7px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: #4CAF50;
+            width: 0;
+            transition: width 1s ease-in-out;
+        }
+
+        .vote-count {
+            text-align: right;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+            .button:hover {
+                background-color: #45a049;
+            }
+
+            .button:focus {
+                outline: none;
+                box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.5);
+            }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+        }
+
+        h2 {
+            color: #333;
+            margin-top: 0;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .option-name {
+            font-size: 14px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+
+            button:disabled {
+                background-color: #cccccc;
+                cursor: not-allowed;
+            }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Best Online AI Tools Real-Time Survey</h1>
+        <div class="card">
+            <h2>Resource Options</h2>
+            <p>Please, vote for your favorite tool</p>
+            <div id="options-container"></div>
+        </div>
+
+        <div class="progress-container">
+            <div class="tool">
+                <div class="tool-name">ChatGPT</div>
+                <div class="progress-bar">
+                    <div class="progress" data-votes="0"></div>
+                </div>
+                <div class="vote-count">0 votes</div>
+            </div>
+            <div class="tool">
+                <div class="tool-name">DALL-E</div>
+                <div class="progress-bar">
+                    <div class="progress" data-votes="0"></div>
+                </div>
+                <div class="vote-count">0 votes</div>
+            </div>
+            <div class="tool">
+                <div class="tool-name">Midjourney</div>
+                <div class="progress-bar">
+                    <div class="progress" data-votes="0"></div>
+                </div>
+                <div class="vote-count">0 votes</div>
+            </div>
+            <div class="tool">
+                <div class="tool-name">GitHub Copilot</div>
+                <div class="progress-bar">
+                    <div class="progress" data-votes="0"></div>
+                </div>
+                <div class="vote-count">0 votes</div>
+            </div>
+            <div class="tool">
+                <div class="tool-name">Jasper AI</div>
+                <div class="progress-bar">
+                    <div class="progress" data-votes="0"></div>
+                </div>
+                <div class="vote-count">0 votes</div>
+            </div>
+        </div>
+        <div class="button-container">
+          
+        </div>
+    </div>
+
+    <script>
+        var connection = new signalR.HubConnectionBuilder().withUrl("/RealTimeEncuestaHub").build();
+        connection.start().then(function () {
+            //en este ejemplo no hago nada cuando me conecto
+        }).catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        //Este metodo se ejecuta cuando se invoca desde el Servidor
+        connection.on("RefrescarGrafica", function (votos) {
+            console.info("Me invocaron desde el servidor para refrescar la grafica");
+           
+            redibujarGrafica(votos);
+        });
+
+        // Initial voting data
+        let votingData = {
+            "ChatGPT": 0,
+            "DALL-E": 0,
+            "Midjourney": 0,
+            "GitHub Copilot": 0,
+            "Jasper AI": 0
+        };
+
+        const options = [
+            { name: "ChatGPT", indice: 0 },
+            { name: "DALL-E", indice: 1 },
+            { name: "Midjourney", indice: 2 },
+            { name: "GitHub Copilot", indice: 3 },
+            { name: "Jasper AI", indice: 4}
+        ];
+
+        const container = document.getElementById('options-container');
+        options.forEach(option => {
+            container.appendChild(createOptionElement(option));
+        });
+
+        function createOptionElement(option) {
+            const optionDiv = document.createElement('div');
+            optionDiv.className = 'option';
+
+            const nameSpan = document.createElement('span');
+            nameSpan.className = 'option-name';
+            nameSpan.textContent = option.name;
+
+            const button = document.createElement('button');
+            button.textContent = 'Vote';
+            button.setAttribute('aria-label', `Vote for ${option.name}`);
+            button.onclick = () => {
+                disableAllButtons();
+                realizarVotacion(option.indice);
+            };
+
+            optionDiv.appendChild(nameSpan);
+            optionDiv.appendChild(button);
+
+            return optionDiv;
+        }
+
+        function realizarVotacion(indice) {
+            console.info("Envio voto para " + indice);
+            //Votar es un metodo del hub al cual me conecto
+            connection.invoke("Votar", indice).catch(function (err) {
+                return console.error(err.toString());
+            });
+        }
+
+   
+        function redibujarGrafica(votos) {
+            let indiceAux = 0;
+            Object.keys(votingData).forEach(tool => {
+                votingData[tool] = votos[indiceAux];
+                indiceAux++;
+            });
+            updateProgressBars();
+            showProgressContainer();
+        }
+
+        // Function to update progress bars
+        function updateProgressBars() {
+            const tools = document.querySelectorAll('.tool');
+            let totalVotes = Object.values(votingData).reduce((a, b) => a + b, 0);
+
+            tools.forEach(tool => {
+                const toolName = tool.querySelector('.tool-name').textContent;
+                const votes = votingData[toolName] || 0;
+                const percentage = (votes / totalVotes) * 100;
+
+                const progressBar = tool.querySelector('.progress');
+                const voteCount = tool.querySelector('.vote-count');
+
+                progressBar.style.width = `${percentage}%`;
+                progressBar.setAttribute('data-votes', votes);
+                voteCount.textContent = `${votes} votes`;
+            });
+        }
+
+        function showProgressContainer() {
+            document.querySelector('.progress-container').style.display = 'grid';
+        }
+
+        function disableAllButtons() {
+            const buttons = document.querySelectorAll('#options-container button');
+            buttons.forEach(button => {
+                //para hacer la prueba más facil
+                //button.disabled = true; 
+            });
+        }
+
+        
+    </script>
+</body>

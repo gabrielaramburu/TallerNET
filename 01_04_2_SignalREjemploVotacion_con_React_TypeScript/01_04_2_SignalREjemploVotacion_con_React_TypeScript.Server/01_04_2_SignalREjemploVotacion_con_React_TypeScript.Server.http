@@ -1,0 +1,6 @@
+@_01_04_2_SignalREjemploVotacion_con_React_TypeScript.Server_HostAddress = http://localhost:5235
+
+GET {{_01_04_2_SignalREjemploVotacion_con_React_TypeScript.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
