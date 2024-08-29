@@ -1,10 +1,19 @@
 using _01_4_blazorServerAppEjemplo.Components;
+using _01_4_blazorServerAppEjemplo.Infraestructure.Data;
+using _01_4_blazorServerAppEjemplo.Models;
+using Radzen;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+// Para que funcionen los componentes
+builder.Services.AddRadzenComponents();
+
+builder.Services.AddSingleton<IVehiculoRepository, VehiculoRepository>();
+
 
 var app = builder.Build();
 
@@ -22,6 +31,7 @@ app.UseStaticFiles();
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();  //tipo de renderización a utilizar
+    .AddInteractiveServerRenderMode();
+
 
 app.Run();

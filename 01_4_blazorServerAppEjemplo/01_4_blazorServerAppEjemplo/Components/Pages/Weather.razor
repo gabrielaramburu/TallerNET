@@ -1,6 +1,15 @@
 ﻿@page "/weather"
 @attribute [StreamRendering]
 
+@*Lo más interesante de este ejemplo es que se utiliza el template engine para generar un html 
+    que se devuelve al cliente
+    En definitiva, si bien estamos trabajano en un proyecto Blazor, podemos seguir usando según sea
+    el caso, una y otra tecnología.
+    Si un requerimiento en nuestra aplicación requiere solo enviar datos al cliente, no es necesario
+    utilizar un componente Blazor para eso, con el template alcanza.
+    En casos más complejos como el de una grilla de selección con el template no alcanza (ver ejemplo grilla)
+*@
+
 <PageTitle>Weather</PageTitle>
 
 <h1>Weather</h1>

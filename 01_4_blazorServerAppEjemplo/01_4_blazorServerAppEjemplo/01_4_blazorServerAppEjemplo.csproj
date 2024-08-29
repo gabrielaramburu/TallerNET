@@ -8,4 +8,10 @@
     <AssemblyName>$(AssemblyName.Replace(' ', '_'))</AssemblyName>
   </PropertyGroup>
 
+ 
+
+  <ItemGroup>
+    <PackageReference Include="Radzen.Blazor" Version="5.1.5" />
+  </ItemGroup>
+
 </Project>

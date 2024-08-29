@@ -2,6 +2,9 @@
 <html lang="en">
 
 <head>
+    <!-- Configuración del componente -->
+    <RadzenTheme Theme="material" @rendermode="InteractiveServer" />
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base href="/" />
@@ -10,11 +13,18 @@
     <link rel="stylesheet" href="01_4_blazorServerAppEjemplo.styles.css" />
     <link rel="icon" type="image/png" href="favicon.png" />
     <HeadOutlet />
+
+    
 </head>
 
+  
 <body>
     <Routes />
     <script src="_framework/blazor.web.js"></script>
 </body>
 
 </html>
+
+<!-- Tambien tuve que agregar este js  -->
+<script src="_content/Radzen.Blazor/Radzen.Blazor.js?v=@(typeof(Radzen.Colors).Assembly.GetName().Version)"></script>
+

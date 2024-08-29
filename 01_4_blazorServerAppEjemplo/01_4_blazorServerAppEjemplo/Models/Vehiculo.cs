@@ -4,11 +4,12 @@ namespace _01_4_blazorServerAppEjemplo.Models
 {
     public class Vehiculo
     {
+        public int Id { get; set; }
         [Required]
         [StringLength(10, MinimumLength = 6)]
-        public string Matricula { get; set; }
-        public string Marca { get; set; }
-        public string Modelo { get; set; }
+        public string? Matricula { get; set; }
+        public string? Marca { get; set; }
+        public string? Modelo { get; set; }
         public int AnioFabricacion { get; set; }
 
         public Vehiculo() { }
@@ -20,5 +21,7 @@ namespace _01_4_blazorServerAppEjemplo.Models
             Modelo = modelo;
             AnioFabricacion = anioFabricacion;
         }
+
+        
     }
 }

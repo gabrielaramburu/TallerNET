@@ -1,0 +1,54 @@
+﻿@page "/grillaVehiculo"
+@rendermode InteractiveServer
+@* Estos componentes Blazor son librerías de código, para poder acceder a las mismas usando using
+    primer tengo que descargarlas. Esto lo realicé siguiendo el tutorial del proyecto https://blazor.radzen.com/get-started
+*@
+@using _01_4_blazorServerAppEjemplo.Models;
+@* Hay que acordarse de agregar el repositorio y su implementacion como un servicio en Program.cs*@
+@inject IVehiculoRepository Repositorio;
+
+
+<h3>Ejemplo Grilla</h3>
+
+
+@*
+    Lo que sigue a continuación es lo que determina el comportamiento de la grilla
+    Hay que entender como está construido el componente
+    No tiene nada que ver con .NET o Blazor
+    Puntos importantes:
+
+    Data="@_vehiculos" conecto el componente con una fuente de datos
+    Property="@nameof(Vehiculo.Matricula)" se obtienen información de cada item de la lista
+
+*@
+<RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
+                Data="@_vehiculos" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or" SelectionMode="DataGridSelectionMode.Single" @bind-Value=@selectedVehiculos>
+    <Columns>
+        <RadzenDataGridColumn Property="@nameof(Vehiculo.Id)" Filterable="false" Title="ID" Frozen="true" Width="80px" TextAlign="TextAlign.Center" />
+
+        <RadzenDataGridColumn Property="@nameof(Vehiculo.Matricula)" Title="Matricula" Frozen="true" Width="160px" />
+        <RadzenDataGridColumn Property="@nameof(Vehiculo.Marca)" Title="Marca" Width="160px" />
+        <RadzenDataGridColumn Property="@nameof(Vehiculo.Modelo)" Title="Modelo" Width="200px" />
+        <RadzenDataGridColumn Property="@nameof(Vehiculo.AnioFabricacion)" Title="Año" Width="120px" />
+    </Columns>
+</RadzenDataGrid>
+
+@code {
+    private IList<Vehiculo> _vehiculos;
+    private IVehiculoRepository _repositorio;
+
+    IList<Vehiculo> selectedVehiculos;
+
+    // Este método se invoca al invocar la página
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        // a esta lista accedo desde el componente Grilla
+        _vehiculos = Repositorio.GetVehiculos();
+
+     
+    }
+
+
+}
