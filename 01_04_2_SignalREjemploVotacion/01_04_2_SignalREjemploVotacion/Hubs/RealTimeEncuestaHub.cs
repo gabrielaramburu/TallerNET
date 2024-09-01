@@ -13,6 +13,7 @@ namespace _01_04_2_SignalREjemploVotacion.Hubs
             _encuesta = encuesta;
         }
 
+        //API remota de tipo real-time
         public void Votar(int elementoId)
         {
             string descParticipante = this._encuesta.ObtenerDescripcionParticipante(elementoId);
