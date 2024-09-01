@@ -1,0 +1,46 @@
+﻿@page "/sensor"
+@rendermode InteractiveServer
+@using Microsoft.AspNetCore.SignalR.Client
+
+<h3>Sensor en tiempo real</h3>
+
+<RadzenStack class="rz-p-0 rz-p-md-6 rz-p-lg-12" AlignItems="AlignItems.Center">
+   
+
+    <RadzenRadialGauge Style="width: 100%; height: 300px;">
+        <RadzenRadialGaugeScale StartAngle="-150" EndAngle="150" Step="20" Min="0" Max="260" TickPosition=@tickPosition>
+            <RadzenRadialGaugeScalePointer Value=@value Length="0.6" ShowValue=@showValue>
+                <Template Context="pointer">
+                    <RadzenStack AlignItems="AlignItems.Center" Gap="0" class="rz-mt-4">
+                        <RadzenText TextStyle="TextStyle.H5" class="rz-m-0"><strong>@pointer.Value</strong></RadzenText>
+                        <RadzenText TextStyle="TextStyle.Caption">Temperatura</RadzenText>
+                    </RadzenStack>
+                </Template>
+            </RadzenRadialGaugeScalePointer>
+            <RadzenRadialGaugeScaleRange From="0" To="90" Fill="green" />
+            <RadzenRadialGaugeScaleRange From="90" To="140" Fill="orange" />
+            <RadzenRadialGaugeScaleRange From="140" To="260" Fill="red" />
+        </RadzenRadialGaugeScale>
+    </RadzenRadialGauge>
+</RadzenStack>
+
+@code {
+    HubConnection connection;
+    // Los componentes (como toda pieza de software manejada por un contenedor) tiene un ciclo de vida
+    // En este caso OnInitializedAsync es lo primero que se ejecuta cuando voy a usar el componente
+    protected override async Task OnInitializedAsync()
+    {
+        // establezco la conexión con el Hub 
+        //
+        connection = new HubConnectionBuilder().WithUrl("/signalRHub").Build();
+        connection.On<string, string>("receiveMessage", this.ReceiveMessage);
+        await connection.StartAsync();
+    }
+
+
+    bool showValue = true;
+    double value = 100;
+    IEnumerable<GaugeTickPosition> tickPositions = Enum.GetValues(typeof(GaugeTickPosition)).Cast<GaugeTickPosition>();
+    GaugeTickPosition tickPosition = GaugeTickPosition.Inside;
+}
+
