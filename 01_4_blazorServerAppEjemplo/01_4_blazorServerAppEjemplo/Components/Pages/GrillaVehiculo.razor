@@ -44,6 +44,7 @@
     {
         await base.OnInitializedAsync();
 
+        Console.WriteLine("Obteniendo vehiculos.");
         // a esta lista accedo desde el componente Grilla
         _vehiculos = Repositorio.GetVehiculos();
 
