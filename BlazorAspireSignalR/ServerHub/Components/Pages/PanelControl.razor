@@ -1,0 +1,71 @@
+﻿@page "/panelControl"
+
+@rendermode InteractiveServer
+@using Hubs
+@using Models
+@inject IHubContext<PanelControlHub> _hubContext;
+@inject IPanelControl _panelDeControl;
+@inject ILogger<PanelControl> Logger
+
+<h3>PanelControl</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Conexion ID</th>
+            <th>Temperatura</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var sensor in _panelDeControl.ObtenerSensores())
+        {
+            <tr>
+                <td>@sensor.Id</td>
+                <td>@sensor.Nombre</td>
+                <td>@sensor.ConexionID</td>
+                <td>
+                    <button class="btn btn-primary" @onclick="() => Prender(sensor.Id)">Prender</button>
+                    <button class="btn btn-primary" @onclick="() => Apagar(sensor.Id)">Apagar</button>
+                </td>
+                <td>@sensor.TemperaturaActual</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    protected override void OnInitialized()
+    {
+        //suscribo un método al evento
+        this._panelDeControl.CambioEnSensorEvento += CambioEnSensor;
+    }
+
+    private async void CambioEnSensor(object sender, int newCounter)
+    {
+        await InvokeAsync(() =>
+        {
+            Logger.LogInformation("Refrescando página porque hubo un cambio en el sensor");
+            StateHasChanged();
+        });
+    }
+
+    async private void Prender(int idSensor)
+    {
+        Sensor sensor = _panelDeControl.ObtenerSensor(idSensor);
+        Logger.LogInformation("Prendiendo maquina {maq}. IdConn: {id}", idSensor, sensor.ConexionID);
+
+        await _hubContext.Clients.Client(sensor.ConexionID).SendAsync("encender");
+    }
+
+    async private void Apagar(int idSensor)
+    {
+        Sensor sensor = _panelDeControl.ObtenerSensor(idSensor);
+        Logger.LogInformation("Apagando maquina {maq}. IdConn: {id}", idSensor, sensor.ConexionID);
+
+        await _hubContext.Clients.Client(sensor.ConexionID).SendAsync("apagar");
+    }
+ 
+}

@@ -1,0 +1,166 @@
+﻿@page "/"
+@using System.ComponentModel.DataAnnotations
+@inject ILogger<SensorRemoto> Logger
+@using Microsoft.AspNetCore.SignalR.Client
+@inject NavigationManager Navigation
+
+<div>
+    <h1>Sensor remoto</h1>
+ 
+
+
+<EditForm EditContext="editContext" OnValidSubmit="Submit" FormName="SensorRemoto">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="p-3">
+        <img id="avatar" src="../raspberry.jpg" />
+    </div>
+    <div>
+        <label>
+            Identifier:
+            <InputNumber @bind-Value="Model!.IdSensor" />
+        </label>
+    </div>
+    <div>
+        <button type="submit">Registrar</button>
+    </div>
+
+  
+</EditForm>
+    <p role="status">Estado sensor: @estadoSensor</p>
+    <p role="status">Estado motor: @estadoMotor</p>
+    <p role="status">Temperatura: @temperatura</p>
+</div>
+
+
+@code {
+    private HubConnection? hubConnection;
+    private EditContext? editContext;
+    private int idSensor = 0;
+    private String estadoSensor;
+    private String estadoMotor ;
+    private int temperatura;
+    private int prendido;
+
+    [SupplyParameterFromForm]
+    private Sensor? Model { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Model = new();
+        editContext = new(Model);
+        this.estadoMotor = "Apagado";
+        this.temperatura = 0;
+
+        try
+        {
+            SimularCambioTemperatura();
+
+            string url = "https://localhost:7022/panelControl";
+            Logger.LogInformation("Inicio conexión con Hub , " + url);
+
+            Uri aux = new Uri(url);
+
+            hubConnection = new HubConnectionBuilder()
+            .WithUrl(aux)
+            .Build();
+            conectar();
+
+            hubConnection.On("encender",()  =>
+            {
+                this.estadoMotor = "Prendido";
+                InvokeAsync(StateHasChanged);
+                prendido = 1;
+
+            });
+
+            hubConnection.On("apagar", () =>
+            {
+                this.estadoMotor = "Apagado";
+                InvokeAsync(StateHasChanged);
+                prendido = 0;
+
+            });
+
+        } catch (Exception e)
+        {
+            Logger.LogError("Error al conectar con hub.");
+        }
+
+
+    }
+
+    private async void conectar()
+    {
+        await hubConnection.StartAsync();
+        this.estadoSensor = "Conectado con Hub";
+        Logger.LogInformation("Conectado con Hub");
+        StateHasChanged();
+    }
+
+    public bool IsConnected =>
+       hubConnection?.State == HubConnectionState.Connected;
+
+    public async ValueTask DisposeAsync()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.DisposeAsync();
+        }
+    }
+
+    private void Submit()
+    {
+        try
+        {
+            idSensor = this.Model.IdSensor;
+            this.hubConnection.InvokeAsync("registrar", idSensor);
+
+        }
+        catch (Exception e)
+        {
+            Logger.LogError("No se pudo enviar mensaje, sensor: " + idSensor);
+        }
+    }
+
+    private class Sensor
+    {
+        [Required]
+        [Range(1, 3, ErrorMessage = "Rango inválido, solo hay tres senosores")]
+        public int IdSensor { get; set; }
+    }
+
+    private void SimularCambioTemperatura()
+    {
+        //Esto es un thread que esta corriendo en segundo plano
+        var timer = new Timer(new TimerCallback(_ =>
+       {
+           if (prendido == 1)
+           {
+               temperatura++;
+               NotificarCambioTemperatura();
+           } else
+           {
+               if (temperatura > 0)
+               {
+                   temperatura--;
+                   NotificarCambioTemperatura();
+               }
+           }
+           
+          
+           InvokeAsync(() =>
+           {
+               StateHasChanged();
+           });
+       }), null, 0, 1000); //lanzo cada un segundo
+    }
+
+   
+
+    private void NotificarCambioTemperatura()
+    {
+        Console.WriteLine("Cambió temperatura, idSensor: " + idSensor);
+        this.hubConnection.InvokeAsync("cambiotemperatura", idSensor, temperatura);
+    }
+}
