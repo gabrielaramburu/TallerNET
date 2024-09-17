@@ -1,0 +1,31 @@
+﻿
+
+
+    <RadzenRadialGauge Style="width: 50%; height: 150px;">
+        <RadzenRadialGaugeScale StartAngle="-150" EndAngle="150" Step="20" Min="0" Max="100" TickPosition=@tickPosition>
+            <RadzenRadialGaugeScalePointer Value=@TemperaturaActual Length="0.6" ShowValue=@showValue>
+                <Template Context="pointer">
+                    <RadzenStack AlignItems="AlignItems.Center" Gap="0" class="rz-mt-4">
+                        <RadzenText TextStyle="TextStyle.H6" class="rz-m-0"><strong>@pointer.Value</strong></RadzenText>
+                        <RadzenText TextStyle="TextStyle.Caption">km/h</RadzenText>
+                    </RadzenStack>
+                </Template>
+            </RadzenRadialGaugeScalePointer>
+            <RadzenRadialGaugeScaleRange From="0" To="60" Fill="green" />
+            <RadzenRadialGaugeScaleRange From="60" To="85" Fill="orange" />
+            <RadzenRadialGaugeScaleRange From="85" To="100" Fill="red" />
+        </RadzenRadialGaugeScale>
+    </RadzenRadialGauge>
+
+@code {
+    //observar el pasaje de parámetros
+    [Parameter]
+    public double TemperaturaActual { get; set; }
+
+
+    GaugeTickPosition tickPosition = GaugeTickPosition.None;
+
+
+    bool showValue = true;
+
+}

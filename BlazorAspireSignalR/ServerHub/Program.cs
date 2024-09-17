@@ -1,6 +1,8 @@
+using Radzen;
 using ServerHub.Components;
 using ServerHub.Components.Pages;
 using ServerHub.Hubs;
+using ServerHub.Messaging;
 using ServerHub.Models;
 using System.Security.Cryptography;
 
@@ -8,12 +10,18 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton<IPanelControl, Panel>();
 
+builder.Services.AddTransient<ColaRabbitMQ>();
+
 builder.AddServiceDefaults();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+builder.Services.AddRadzenComponents();
+
+// esto es ya que el cliente signalR pertenece a otro proyecto diferente al ServerHub
+//por lo tanto hay que habilitar CORS (intercambio de recursos de origen cruzado)
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
 {
@@ -29,6 +37,8 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddSignalR();
+
+builder.AddRabbitMQClient("messaging");
 
 var app = builder.Build();
 

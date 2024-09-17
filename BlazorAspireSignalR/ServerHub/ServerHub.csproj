@@ -10,4 +10,13 @@
     <ProjectReference Include="..\BlazorAspireSignalR.ServiceDefaults\BlazorAspireSignalR.ServiceDefaults.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Components\NewFolder\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.RabbitMQ.Client" Version="8.2.0" />
+    <PackageReference Include="Radzen.Blazor" Version="5.2.0" />
+  </ItemGroup>
+
 </Project>

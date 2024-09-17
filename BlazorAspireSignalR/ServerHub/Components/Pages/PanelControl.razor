@@ -1,8 +1,11 @@
-﻿@page "/panelControl"
+﻿@page "/" 
+@* para que cargue como pagina incial *@
+@page "/panelControl"
 
 @rendermode InteractiveServer
 @using Hubs
 @using Models
+@using ServerHub.Components.ChildsComponents
 @inject IHubContext<PanelControlHub> _hubContext;
 @inject IPanelControl _panelDeControl;
 @inject ILogger<PanelControl> Logger
@@ -22,15 +25,21 @@
     <tbody>
         @foreach (var sensor in _panelDeControl.ObtenerSensores())
         {
-            <tr>
+            <tr height="20px">
                 <td>@sensor.Id</td>
                 <td>@sensor.Nombre</td>
                 <td>@sensor.ConexionID</td>
                 <td>
+                    <div>
+                    <Visualizador TemperaturaActual="@sensor.TemperaturaActual" />
+                    </div>
+                </td>
+                <td>
                     <button class="btn btn-primary" @onclick="() => Prender(sensor.Id)">Prender</button>
                     <button class="btn btn-primary" @onclick="() => Apagar(sensor.Id)">Apagar</button>
                 </td>
-                <td>@sensor.TemperaturaActual</td>
+                <!-- <td>@sensor.TemperaturaActual</td> -->
+
             </tr>
         }
     </tbody>

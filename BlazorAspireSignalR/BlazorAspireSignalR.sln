@@ -5,7 +5,7 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerHub", "ServerHub\ServerHub.csproj", "{5BE68C98-2364-4E93-8D2D-79196DD1AB2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorAspireSignalR.AppHost", "BlazorAspireSignalR.AppHost\BlazorAspireSignalR.AppHost.csproj", "{19C37DFF-CD5E-45C6-B537-3DD78ACFD012}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorAspireSignalR.AppHost", "BlazorAspireSignalR.AppHost\BlazorAspireSignalR.AppHost.csproj", "{19C37DFF-CD5E-45C6-B537-3DD78ACFD012}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorAspireSignalR.ServiceDefaults", "BlazorAspireSignalR.ServiceDefaults\BlazorAspireSignalR.ServiceDefaults.csproj", "{2F0EE4AE-586E-4E35-BE38-78B7A9B019DB}"
 EndProject
