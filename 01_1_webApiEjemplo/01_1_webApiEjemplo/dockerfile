@@ -1,0 +1,13 @@
+# Imagen final solo con runtime
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+WORKDIR /app
+
+# Copia solo los archivos publicados
+COPY ./publish .
+
+# Configuración del entorno
+ENV ASPNETCORE_URLS=http://+:5264
+ENV ASPNETCORE_ENVIRONMENT=Development
+EXPOSE 5264
+
+ENTRYPOINT ["dotnet", "01_1_webApiEjemplo.dll"]
