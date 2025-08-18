@@ -1,0 +1,17 @@
+﻿INSERT INTO birds (name, species, age) VALUES ('Mirlo común', 'Turdus merula', 2);
+INSERT INTO birds (name, species, age) VALUES ('Gorrión común', 'Passer domesticus', 3);
+INSERT INTO birds (name, species, age) VALUES ('Águila real', 'Aquila chrysaetos', 5);
+INSERT INTO birds (name, species, age) VALUES ('Colibrí esmeralda', 'Chlorostilbon lucidus', 1);
+INSERT INTO birds (name, species, age) VALUES ('Búho real', 'Bubo bubo', 4);
+INSERT INTO birds (name, species, age) VALUES ('Cigüeña blanca', 'Ciconia ciconia', 6);
+INSERT INTO birds (name, species, age) VALUES ('Pato azulón', 'Anas platyrhynchos', 2);
+INSERT INTO birds (name, species, age) VALUES ('Gaviota argéntea', 'Larus argentatus', 3);
+INSERT INTO birds (name, species, age) VALUES ('Carbonero común', 'Parus major', 2);
+INSERT INTO birds (name, species, age) VALUES ('Lechuza común', 'Tyto alba', 3);
+INSERT INTO birds (name, species, age) VALUES ('Pavo real', 'Pavo cristatus', 4);
+INSERT INTO birds (name, species, age) VALUES ('Cuervo grande', 'Corvus corax', 5);
+INSERT INTO birds (name, species, age) VALUES ('Canario', 'Serinus canaria', 2);
+INSERT INTO birds (name, species, age) VALUES ('Flamenco común', 'Phoenicopterus roseus', 7);
+INSERT INTO birds (name, species, age) VALUES ('Pelícano blanco', 'Pelecanus onocrotalus', 6);
+INSERT INTO birds (name, species, age) VALUES ('Tucán pico iris', 'Ramphastos sulfuratus', 4);
+INSERT INTO birds (name, species, age) VALUES ('Cotorra argentina', 'Myiopsitta monachus', 3);
