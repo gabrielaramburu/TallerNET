@@ -47,11 +47,13 @@ namespace _01_1_webApiEjemplo.Controllers
             return Ok(_vehiculoList[id]);
         }
 
-        [HttpPost] //ejemplo de post
+        [HttpPost] //obtengo parámetros desde el body de la solicitud
         public ActionResult Nuevo([FromBody]Vehiculo vehiculo) //notese el atributo FromBody
+                                                               // que permite realizar el binding (json a objeto)
         {
             _logger.LogInformation("Nuevo vehiculo");
             this._vehiculoList.Add(vehiculo);
+         
             return Ok();
         }
 

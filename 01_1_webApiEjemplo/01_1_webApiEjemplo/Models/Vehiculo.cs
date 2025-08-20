@@ -18,7 +18,7 @@
         //notese que los siguientes miembros de la clase comienzan con mayúsculas ya que son propiedades 
         // (no son atributos)
 
-        public string? Matricula { get; set; }   //? significa que la variable puede contener valores nulos 
+        public string? Matricula { get; set; }   //? significa que el atributo puede contener valores nulos 
         public string? Marca { get; set; }
 
        
@@ -30,7 +30,7 @@
         
         }
 
-        public Vehiculo() //necesario para la desceralizacion
+        public Vehiculo() //necesario para la descerealizacion
         {
         }
             

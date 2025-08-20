@@ -1,12 +1,14 @@
 using _01_1_webApiEjemplo.Controllers;
 
+// 1)  creo un builder de la aplicación, el cual me sirve para configurar  
+// dependencias, servicios, middlewares, etc. que va a utilizar la aplicación
 var builder = WebApplication.CreateBuilder(args);
 
 // documentación clase Builder
 // https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.builder.webapplicationbuilder?view=aspnetcore-8.0
 
 //Agrego logger
-builder.Logging.AddConsole();
+//builder.Logging.AddConsole();
 
 // Add services to the container.
 
@@ -22,10 +24,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.builder.webapplication?view=aspnetcore-8.0
-// Informción clas
+// 2) A partir del builder creo la aplicación. 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configuración del pipeline de solicitudes HTTP.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -38,4 +40,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+app.Run(); //inicia el servidor y comienza a escuchar solicitudes HTTP
