@@ -21,12 +21,15 @@ namespace _01_2_webAppEjemplo.Controllers
             _vehiculoRepository = repo;
             _webRootPath = path;
         }
-      
+
         // https://localhost:7144/Vehiculo/GetAllVehiculos
-        [Route("GetAllVehiculos")]
+        //[Route("GetAllVehiculos")]
+        //por defecto se usa el nombre del action,
+        //pero podria establecer un nombre diferente
         public IActionResult GetAllVehiculos()
         {
-            // observar que explicitamente indico el nombre de la vista que quiero renderizar
+            // observar que explicitamente indico el nombre de la vista que quiero
+            // renderizar y le paso como parámetro el resultado del repositorio
             return View("GrillaVehiculo", this._vehiculoRepository.GetVehiculos());
         }
 

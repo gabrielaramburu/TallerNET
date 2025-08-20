@@ -33,6 +33,16 @@
         </dd>
     </dl>
     
+    <!-- Genera un http POST enviando en el body del http la matricula,
+      
+        Desde el punto de vista de la web y cómo funciona HTTP, 
+        un form action (la acción de un formulario) no es algo específico de ASP.NET Core,
+        sino una característica estándar de HTML.
+
+        El action de un formulario es la URL del servidor a la que se envían los datos del 
+        formulario cuando el usuario hace clic en el botón de enviar (submit).
+
+    -->
     <form asp-action="ConfirmarBorrado">
         <input type="hidden" asp-for="Matricula" />
         <input type="submit" value="Borrar" class="btn btn-danger" /> |

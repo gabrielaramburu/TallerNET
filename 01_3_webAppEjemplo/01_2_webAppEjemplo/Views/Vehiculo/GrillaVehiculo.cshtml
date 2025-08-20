@@ -11,7 +11,9 @@
     <!-- HTML comment --> también funcionan los comentarios html
 *@
 
-<!-- permite trabajar con tipado el objeto Vehiculo -->
+<!-- Declaro que el modelo de esta vista (sus datos) son una lista de objetos vehiculo
+    Observar que esta lista es pasada como parámetro desde el Controlador
+-->
 @model IEnumerable<_01_3_webAppEjemplo.Models.Vehiculo>
 
 @{
@@ -26,7 +28,10 @@
     <thead>
         <tr>
             <th>
-                <!-- El nombre del cabezal de la columna lo saca del nombre del atributo
+                <!-- 
+                Html es un helper de ASP.NET Core que permite generar código html
+                
+                El nombre del cabezal de la columna lo saca del nombre del atributo
                 Simplemente podría escribir el nombre de la columna como se hace en Año fabricación -->
                 @Html.DisplayNameFor(model => model.Matricula)
             </th>
@@ -37,7 +42,8 @@
                 @Html.DisplayNameFor(model => model.Modelo)
             </th>
             <th>
-                <!-- A modo de ejemplo aqui simplemente escribrí el nombre de la columna  -->
+                <!-- A modo de ejemplo aqui simplemente escribrí el nombre de la columna
+                sin pedirle al modelo el valor  -->
                 Año de Fabricación
             </th>
             <th></th>
@@ -47,7 +53,7 @@
         
         @foreach (var item in Model)
         {
-            // notese que Model está definido en @Model
+            // notese que Model está definido en @Model y es una lista de vehiculos
             <tr>
                 <td>
                     <!-- notese que el compilador reconoce que Matricula es un atributo valido del modelo  -->
@@ -63,12 +69,15 @@
                     @Html.DisplayFor(modelItem => item.AnioFabricacion)
                 </td>
                 <td>
-                    <!-- obervar que no se indica el asp-controller ya que se asume el controller de la vista actual -->
+                    <!-- observar que no se indica el asp-controller 
+                        (como si se indica en la vista Home )
+                        ya que se asume que el controller es el de la vista actual -->
                     <a asp-action="Editar" asp-route-id="@item.Matricula">Editar</a> |
                     <a asp-action="Ver" asp-route-id="@item.Matricula">Ver</a> |
                     <a asp-action="Borrar" asp-route-id="@item.Matricula">Borrar</a>
 
-                    <!-- observar como se generar los link en el codigo html renderizado
+                    <!-- observar como se generar los link en el codigo html renderizado, 
+                        por ejemplo
                     <a href="/Vehiculo/Borrar/BAA%201111">Borrar</a> -->
                 </td>
             </tr>
