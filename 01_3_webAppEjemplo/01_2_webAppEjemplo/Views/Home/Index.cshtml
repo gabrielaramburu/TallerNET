@@ -11,6 +11,10 @@
             html del estilo <a href="/Vehiculo/GetAllVehiculos">Listar vehiculos CRUD</a>
 
             tengo que especificar el nombre del controller y del action
+
+            si observamos el código del lado del nevegador vamos a ver que se renderizó como
+            <a href="/Vehiculo">Listar vehiculos CRUD</a> ya que el framework optimiza la url generada
+            por el motivo de que GetAllVehiculos es el action por defecto del controller Vehiculo
         -->
         <a asp-controller ="Vehiculo" asp-action="GetAllVehiculos">Listar vehiculos CRUD</a>
         <br>

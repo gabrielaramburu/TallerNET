@@ -74,7 +74,8 @@ namespace _01_2_webAppEjemplo.Controllers
             {
                 return NotFound($"Matrícula no encontrada: {matricula}");
             }
-           
+
+            //llamo a la vista Borrar.cshtml porque el action se llama Borrar
             return View(vehiculo);
         }
 

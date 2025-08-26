@@ -1,11 +1,11 @@
 ﻿@{
     //establece la propiedad Title, la cual puede ser usada(leida) desde el template
-    ViewData["Title"] = "Ejemplo Mantenimiento de Vehiculos";
+    ViewData["Title"] = "Ejemplo básico de transferencia de datos desde controlador a vista usando ViewModel";
 }
 
 <h2>Index</h2>
 
-<p>Vista de vehiculos </p>
+<p>Lista generada en base a parámetros del request </p>
 
 <ul>
     @for (int i = 0; i < (int)ViewData["Value"]!; i++)

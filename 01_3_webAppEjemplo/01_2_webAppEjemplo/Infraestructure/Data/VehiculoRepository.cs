@@ -3,6 +3,8 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace _01_3_webAppEjemplo.Infraestructure.Data
 {
+    //observar como esta clase está declarada como servicio singleton en Program.cs
+    //en el controlador voy a utilizar el servicio inyectado el mismo. (ver VehiculoController)
     public class VehiculoRepository : IVehiculoRepository
     {
         private IDictionary<String, Vehiculo> _vehiculos;
