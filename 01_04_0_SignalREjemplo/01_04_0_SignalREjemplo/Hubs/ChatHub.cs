@@ -6,7 +6,7 @@ namespace _01_04_0_SignalREjemplo.Hubs
     {
         //Este método queda disponible para ser invocado por cada uno de los clientes conectados
         //al hub
-        //Cada vez que un cliente invoca este método, el hug redirecciona el mensaje a todos los clientes
+        //Cada vez que un cliente invoca este método, el hub redirecciona el mensaje a todos los clientes
         //Esto es así porque este ejemplo simula un chat.
         public async Task SendMessage(string user, string message)
         {

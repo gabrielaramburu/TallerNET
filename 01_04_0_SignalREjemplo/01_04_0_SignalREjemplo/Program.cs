@@ -39,12 +39,17 @@ app.MapHub<ChatHub>("/miChat");
 //Hub de grafico.
 app.MapHub<GraficaHub>("/ejemploGrafica");
 
+//Para probar abri pestañas en el broser con esta url http://localhost:5296/ViewEjemploGrafica
+
 //Por cuestiones de simplicidad implemento una Minimal Api
-//curl https://localhost:7159/lanzarEvento
+//curl http://localhost:5296/lanzarEvento
 app.MapGet("/lanzarEvento", (IHubContext<GraficaHub> hubContext) =>
 {
     //Para poder enviar mensajes desde el servidor a los clientes necesita acceder al hub
     //En este caso, le pido al contenedor que me inyecte la instancia del Hub
+    //(la recibo como parámetro)
+
+
     int valor = new Random().Next(100);
     int valor2 = new Random().Next(100);
     int valor3 = new Random().Next(100);
