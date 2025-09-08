@@ -1,0 +1,80 @@
+﻿@page "/sensor"
+@rendermode InteractiveWebAssembly
+@using Microsoft.AspNetCore.SignalR.Client
+@inject NavigationManager Navigation
+
+
+<h3>Sensor en tiempo real</h3>
+
+
+<RadzenStack class="rz-p-0 rz-p-md-6 rz-p-lg-12" AlignItems="AlignItems.Center">
+   
+
+    <RadzenRadialGauge Style="width: 100%; height: 300px;">
+        <RadzenRadialGaugeScale StartAngle="-150" EndAngle="150" Step="20" Min="0" Max="260" TickPosition=@tickPosition>
+            <RadzenRadialGaugeScalePointer Value=@temperaturaActual Length="0.6" ShowValue=@showValue>
+                <Template Context="pointer">
+                    <RadzenStack AlignItems="AlignItems.Center" Gap="0" class="rz-mt-4">
+                        <RadzenText TextStyle="TextStyle.H5" class="rz-m-0"><strong>@pointer.Value</strong></RadzenText>
+                        <RadzenText TextStyle="TextStyle.Caption">Temperatura</RadzenText>
+                    </RadzenStack>
+                </Template>
+            </RadzenRadialGaugeScalePointer>
+            <RadzenRadialGaugeScaleRange From="0" To="90" Fill="green" />
+            <RadzenRadialGaugeScaleRange From="90" To="140" Fill="orange" />
+            <RadzenRadialGaugeScaleRange From="140" To="260" Fill="red" />
+        </RadzenRadialGaugeScale>
+    </RadzenRadialGauge>
+</RadzenStack>
+
+@code {
+    /* este código es de ejemplo (del componente radzen), no lo estamos usando */
+    IEnumerable<GaugeTickPosition> tickPositions = Enum.GetValues(typeof(GaugeTickPosition)).Cast<GaugeTickPosition>();
+    GaugeTickPosition tickPosition = GaugeTickPosition.Inside;
+    
+
+    bool showValue = true;
+    double temperaturaActual = 0;
+    private HubConnection? hubConnection;
+
+    /* Todo componente tiene su ciclo de vida, en este caso este método se ejecuta
+     * automáticamente por el contenedor cuando el componente se usa por primera vez
+     */
+    protected override async Task OnInitializedAsync()
+    {
+        /* lo importante aquí es entender que estamos usando la mísma lógica que cuando usamos 
+         * la librería SignalR de JS (como vimos en los primeros ejemplos)
+         * 1) Desde el cliente nos conectamos al Hub
+         * 2) En el cliente implementamos el método on que escucha los eventos y la lógica que queremos
+         * que se ejecuta al recibir el mismo (redibujar el componente)
+         * 3) Observar como la gran diferencia aquí es que no usamos JS.
+         * Tener en cuenta que tuvimos que importar la librería SignalR.Client
+         */
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(Navigation.ToAbsoluteUri("/sensorTemperatura")) //en este caso es necesario usar el camino absoluto al hub
+            .Build();
+
+        hubConnection.On<int>("cambioDeTemperatura", (temperatura) =>
+        {
+            // Este código se ejecuta en el cliente (en chrome podemos ver este log
+            // en la consola js)
+            Console.WriteLine("La temperatura ha cambiado, " + temperatura);
+            temperaturaActual = temperatura;
+            InvokeAsync(StateHasChanged);
+        });
+
+        await hubConnection.StartAsync();
+    }
+
+
+    public bool IsConnected =>
+        hubConnection?.State == HubConnectionState.Connected;
+
+    public async ValueTask DisposeAsync()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.DisposeAsync();
+        }
+    }
+}
