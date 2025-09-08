@@ -13,8 +13,8 @@
 
 @*
     Lo que sigue a continuación es lo que determina el comportamiento de la grilla
-    Hay que entender como está construido el componente
-    No tiene nada que ver con .NET o Blazor
+    Hay que entender como está construido el componente (se hace leyendo la documentación del componente)
+    No tiene nada que ver con .NET o Blazor 
     Puntos importantes:
 
     Data="@_vehiculos" conecto el componente con una fuente de datos
@@ -35,13 +35,16 @@
 
 @code {
     private IList<Vehiculo> _vehiculos;
-    private IVehiculoRepository _repositorio;
 
     IList<Vehiculo> selectedVehiculos;
 
-    // Este método se invoca al invocar la página
+    // Este método se invoca al invocar la página (ciclo de vida de un componente Blazor)
+    // async/await es codigo asíncrono de C#
     protected override async Task OnInitializedAsync()
     {
+        //asume que esto va a tomar algún tiempo (operaciones largas), 
+        //por lo tanto libera el hilo principal de ejecución 
+        //y se retoma cuando la tarea invocada se completa
         await base.OnInitializedAsync();
 
         Console.WriteLine("Obteniendo vehiculos.");

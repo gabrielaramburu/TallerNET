@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-// Para que funcionen los componentes
+// Para que funcionen los componentes Radzen
 builder.Services.AddRadzenComponents();
 
 builder.Services.AddSingleton<IVehiculoRepository, VehiculoRepository>();
