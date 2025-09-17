@@ -1,0 +1,45 @@
+﻿@model List<(string Name, string Species, int Age)>
+<!-- la vista recibe información del controlador, en este caso una lista de tuplas con nombre, especie y edad de pájaros */
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información de Pájaros</title>
+    <!--  otra mejora podría ser sacar el css para otro archivo -->
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #2c3e50; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        .highlight { background-color: #ffeb3b; } /* Clase CSS para resaltar filas */
+    </style>
+</head>
+<body>
+    <h1>Información de Pájaros</h1>
+    <p>Esta es una demostración de cómo se genera HTML utilizando Razor.</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Especie</th>
+                <th>Edad</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--  aca se ve como funciona el engien template de razor -->
+            @foreach (var bird in Model)
+            {
+                var rowClass = bird.Age >= 5 ? "highlight" : ""; // Aplicar clase si la edad es mayor a 5
+                <tr class="@rowClass">
+                    <td>@bird.Name</td>
+                    <td>@bird.Species</td>
+                    <td>@bird.Age</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
