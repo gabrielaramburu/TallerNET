@@ -1,6 +1,9 @@
 ﻿@page "/sensor"
 @rendermode InteractiveServer
 @using Microsoft.AspNetCore.SignalR.Client
+@inject NavigationManager Navigation
+
+
 
 <h3>Sensor en tiempo real</h3>
 
@@ -12,7 +15,7 @@
             <RadzenRadialGaugeScalePointer Value=@value Length="0.6" ShowValue=@showValue>
                 <Template Context="pointer">
                     <RadzenStack AlignItems="AlignItems.Center" Gap="0" class="rz-mt-4">
-                        <RadzenText TextStyle="TextStyle.H5" class="rz-m-0"><strong>@pointer.Value</strong></RadzenText>
+                        <RadzenText TextStyle="TextStyle.H5" class="rz-m-0"><strong></strong></RadzenText>
                         <RadzenText TextStyle="TextStyle.Caption">Temperatura</RadzenText>
                     </RadzenStack>
                 </Template>
@@ -32,15 +35,29 @@
     {
         // establezco la conexión con el Hub 
         //
-        connection = new HubConnectionBuilder().WithUrl("/signalRHub").Build();
-        connection.On<string, string>("receiveMessage", this.ReceiveMessage);
-        await connection.StartAsync();
+        try
+        {
+            connection = new HubConnectionBuilder().WithUrl(Navigation.ToAbsoluteUri("/cambioTemperatura")).Build();
+            connection.On<string, string>("receiveMessage", this.ReceiveMessage);
+            await connection.StartAsync();
+        } catch(Exception ex)
+        {
+            Console.WriteLine($"No se pudo conectar con el Hub:  {ex.Message}");
+        }
+    
     }
 
+    // Método para manejar mensajes recibidos desde el servidor
+    private void ReceiveMessage(string user, string message)
+    {
 
+       
+    }
     bool showValue = true;
     double value = 100;
     IEnumerable<GaugeTickPosition> tickPositions = Enum.GetValues(typeof(GaugeTickPosition)).Cast<GaugeTickPosition>();
     GaugeTickPosition tickPosition = GaugeTickPosition.Inside;
+
+    
 }
 
