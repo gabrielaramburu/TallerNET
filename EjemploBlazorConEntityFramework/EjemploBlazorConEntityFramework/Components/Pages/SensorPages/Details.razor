@@ -1,0 +1,52 @@
+﻿@page "/sensors/details"
+@using Microsoft.EntityFrameworkCore
+@using EjemploBlazorConEntityFramework.Model
+@inject IDbContextFactory<EjemploBlazorConEntityFramework.Data.EjemploBlazorConEntityFrameworkContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Details</PageTitle>
+
+<h1>Details</h1>
+
+<div>
+    <h2>Sensor</h2>
+    <hr />
+    @if (sensor is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">Nombre</dt>
+            <dd class="col-sm-10">@sensor.Nombre</dd>
+            <dt class="col-sm-2">Descripcion</dt>
+            <dd class="col-sm-10">@sensor.Descripcion</dd>
+            <dt class="col-sm-2">ValorActual</dt>
+            <dd class="col-sm-10">@sensor.ValorActual</dd>
+            <dt class="col-sm-2">Prendido</dt>
+            <dd class="col-sm-10">@sensor.Prendido</dd>
+        </dl>
+        <div>
+            <a href="@($"/sensors/edit?id={sensor.Id}")">Edit</a> |
+            <a href="@($"/sensors")">Back to List</a>
+        </div>
+    }
+</div>
+
+@code {
+    private Sensor? sensor;
+
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        sensor = await context.Sensor.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (sensor is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+}

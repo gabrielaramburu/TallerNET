@@ -1,0 +1,59 @@
+﻿@page "/sensors/create"
+@using Microsoft.EntityFrameworkCore
+@using EjemploBlazorConEntityFramework.Model
+@inject IDbContextFactory<EjemploBlazorConEntityFramework.Data.EjemploBlazorConEntityFrameworkContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create</h1>
+
+<h2>Sensor</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="Sensor" OnValidSubmit="AddSensor" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" />
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre:</label> 
+                <InputText id="nombre" @bind-Value="Sensor.Nombre" class="form-control" /> 
+                <ValidationMessage For="() => Sensor.Nombre" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripcion:</label> 
+                <InputText id="descripcion" @bind-Value="Sensor.Descripcion" class="form-control" /> 
+                <ValidationMessage For="() => Sensor.Descripcion" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="valoractual" class="form-label">ValorActual:</label> 
+                <InputNumber id="valoractual" @bind-Value="Sensor.ValorActual" class="form-control" /> 
+                <ValidationMessage For="() => Sensor.ValorActual" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="prendido" class="form-label">Prendido:</label> 
+                <InputCheckbox id="prendido" @bind-Value="Sensor.Prendido" class="form-check-input" /> 
+                <ValidationMessage For="() => Sensor.Prendido" class="text-danger" /> 
+            </div>        
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/sensors">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    private Sensor Sensor { get; set; } = new();
+
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task AddSensor()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Sensor.Add(Sensor);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/sensors");
+    }
+}

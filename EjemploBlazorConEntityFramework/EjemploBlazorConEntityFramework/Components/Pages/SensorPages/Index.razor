@@ -1,0 +1,40 @@
+﻿@page "/"
+@page "/sensors"
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using EjemploBlazorConEntityFramework.Model
+@using EjemploBlazorConEntityFramework.Data
+@implements IAsyncDisposable
+@inject IDbContextFactory<EjemploBlazorConEntityFramework.Data.EjemploBlazorConEntityFrameworkContext> DbFactory
+
+<PageTitle>CRUD de sensores realizado con Scaffolding</PageTitle>
+
+<h1>Index</h1>
+
+<p>
+    <a href="sensors/create">Create New</a>
+</p>
+
+<QuickGrid Class="table" Items="context.Sensor">
+    <PropertyColumn Property="sensor => sensor.Nombre" />
+    <PropertyColumn Property="sensor => sensor.Descripcion" />
+    <PropertyColumn Property="sensor => sensor.ValorActual" />
+    <PropertyColumn Property="sensor => sensor.Prendido" />
+
+    <TemplateColumn Context="sensor">
+        <a href="@($"sensors/edit?id={sensor.Id}")">Edit</a> |
+        <a href="@($"sensors/details?id={sensor.Id}")">Details</a> |
+        <a href="@($"sensors/delete?id={sensor.Id}")">Delete</a>
+    </TemplateColumn>
+</QuickGrid>
+
+@code {
+    private EjemploBlazorConEntityFrameworkContext context = default!;
+
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+    }
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+}

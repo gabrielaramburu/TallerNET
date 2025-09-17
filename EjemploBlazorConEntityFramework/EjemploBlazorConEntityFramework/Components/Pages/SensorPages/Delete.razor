@@ -1,0 +1,67 @@
+﻿@page "/sensors/delete"
+@using Microsoft.EntityFrameworkCore
+@using EjemploBlazorConEntityFramework.Model
+@inject IDbContextFactory<EjemploBlazorConEntityFramework.Data.EjemploBlazorConEntityFrameworkContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Delete</PageTitle>
+
+<h1>Delete</h1>
+
+<p>Are you sure you want to delete this?</p>
+<div>
+    <h2>Sensor</h2>
+    <hr />
+    @if (sensor is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">Nombre</dt>
+            <dd class="col-sm-10">@sensor.Nombre</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">Descripcion</dt>
+            <dd class="col-sm-10">@sensor.Descripcion</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">ValorActual</dt>
+            <dd class="col-sm-10">@sensor.ValorActual</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">Prendido</dt>
+            <dd class="col-sm-10">@sensor.Prendido</dd>
+        </dl>
+        <EditForm method="post" Model="sensor" OnValidSubmit="DeleteSensor" FormName="delete" Enhance>
+            <button type="submit" class="btn btn-danger" disabled="@(sensor is null)">Delete</button> |
+            <a href="/sensors">Back to List</a>
+        </EditForm>
+    }
+</div>
+
+@code {
+    private Sensor? sensor;
+
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        sensor = await context.Sensor.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (sensor is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    private async Task DeleteSensor()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Sensor.Remove(sensor!);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/sensors");
+    }
+}
