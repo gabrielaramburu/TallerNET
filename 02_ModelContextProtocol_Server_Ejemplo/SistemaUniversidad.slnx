@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="ApiUniversidad/ApiUniversidad.csproj" />
+  <Project Path="ServidorMcp/ServidorMcp.csproj" />
+</Solution>
