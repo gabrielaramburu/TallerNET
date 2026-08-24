@@ -40,6 +40,10 @@ namespace _06_demo_mvc_engine_template.Controllers
             // Pasar la lista de pájaros a la vista
             // Observar como el framework busca la vista en Views/PajarosVersion2/Index.cshtml 
             // asumiendo que el nombre de la misma es Index.cshtml (mismo nombre que el método)
+
+            // Convention over configuration:
+            // si no se especifica la vista, el framework asume que la vista tiene el mismo nombre que el método de acción
+            // y la busca en la carpeta Views/[nombre del controlador].
             return View(birds);
         }
     }

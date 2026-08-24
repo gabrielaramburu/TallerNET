@@ -15,28 +15,22 @@ builder.Services.AddScoped<Pajaro>(provider =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
+//sin necesidad de profundizar,
+//Estas líneas configuran el pipeline de la aplicación para seguridad (HTTPS),
+//servir archivos estáticos, enrutar solicitudes y aplicar reglas de autorización.
+//Es una secuencia estándar en aplicaciones ASP.NET Core.
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-app.UseRouting();
-
+app.UseHttpsRedirection(); 
+app.UseStaticFiles(); 
+app.UseRouting(); 
 app.UseAuthorization();
 
+//comportamiento por defecto, si no se especifica un controlador o acción en la URL,
+//se dirigirá a la acción Index del controlador Pajaros.
+//Ejemplo: https://localhost:5223/ es lo mismo que 
+// https://localhost:5223/Pajaros/Index
 app.MapControllerRoute(
     name: "version1",
     pattern: "{controller=Pajaros}/{action=Index}");
-
-app.MapControllerRoute(
-    name: "version2",
-    pattern: "{controller=PajarosVersion2}/{action=Index}");
-
 
 app.Run();

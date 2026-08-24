@@ -4,6 +4,8 @@ using System.Text;
 
 namespace _06_demo_mvc_engine_template.Controllers
 {
+    /* Este prime ejmplo muestra como se generaba HTML manualmente sin usar frameworks MVC.
+     */
     public class PajarosController : Controller
     {
         public IActionResult Index()
@@ -12,7 +14,7 @@ namespace _06_demo_mvc_engine_template.Controllers
             var connectionString = "Data Source=ejemploPajaros.db;";
 
             // Lista para almacenar los datos de la base de datos
-            var birds = new List<(string Name, string Species, int Age)>();
+            var birds = new List<(string Name, string Species, int Age)>(); //crea una tupla para almacenar los datos de cada pájaro
 
             // Consulta SQL para obtener los datos
             var query = "SELECT Name, Species, Age FROM Birds";
@@ -69,7 +71,7 @@ namespace _06_demo_mvc_engine_template.Controllers
             // Generar filas de la tabla con la información de la lista
             foreach (var bird in birds)
             {
-                var rowClass = bird.Age >= 5 ? "class='highlight'" : ""; // Aplicar clase si la edad es mayor a 5
+                var rowClass = bird.Age >= 5 ? "class='highlight'" : ""; // marco de amarillo los pájaros de edad mayor a 5
                 html.Append($"<tr {rowClass}>");
                 html.Append($"<td>{bird.Name}</td>");
                 html.Append($"<td>{bird.Species}</td>");
