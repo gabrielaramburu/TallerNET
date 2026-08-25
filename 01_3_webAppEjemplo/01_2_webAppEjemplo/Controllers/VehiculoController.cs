@@ -79,7 +79,9 @@ namespace _01_2_webAppEjemplo.Controllers
             return View(vehiculo);
         }
 
-
+        //solo a modo de ejemplo, con ActionName puedo hacer que la operación del Controller se llame de una manera
+        //diferente a la que se llama el action method. En este caso concreto no tiene sentido usarlo
+        //ya que el nombre del action method es el mismo que el nombre de la operación
         [HttpPost, ActionName("ConfirmarBorrado")]
         public IActionResult ConfirmarBorrado(string matricula)
         {
@@ -88,6 +90,7 @@ namespace _01_2_webAppEjemplo.Controllers
             return RedirectToAction("GetAllVehiculos","Vehiculo");
         }
 
+        //Este es el que retorna la vista con el formulario para crear un vehiculo
         [HttpGet]
         [Route("Crear")]
         public IActionResult Crear()
@@ -95,6 +98,7 @@ namespace _01_2_webAppEjemplo.Controllers
             return View();
         }
 
+        //Este es el que llamo del form action
         [HttpPost]
         [Route("CrearVehiculo")]
         public IActionResult CrearVehiculo([Bind("Matricula,Modelo,Marca,AnioFabricacion")] Vehiculo vehiculo)
@@ -104,6 +108,9 @@ namespace _01_2_webAppEjemplo.Controllers
         }
 
 
+        // Este action retorna un archivo html que se encuentra en la carpeta wwwroot
+        //http://localhost:5262/Vehiculo/EjemploDondeDevuelvoHtml
+        //Es solo par demostrar como se puede retornar un archivo html desde un action
         [Route("EjemploDondeDevuelvoHtml")]
         public IActionResult EjemploDondeDevuelvoHtml()
         {
@@ -117,6 +124,9 @@ namespace _01_2_webAppEjemplo.Controllers
         }
 
 
+        //http://localhost:5262/Vehiculo/EjemploAcoplado
+        //simplemente para demostrar que nada me impide "salirme" del modelo vista controlador y generar un html desde el action
+        //pero esto no es recomendable, ya que el código queda acoplado y no es mantenible
         [Route("EjemploAcoplado")]
         public IActionResult EjemploAcoplado()
         {

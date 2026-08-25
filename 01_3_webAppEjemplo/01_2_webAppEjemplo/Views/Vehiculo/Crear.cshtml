@@ -46,8 +46,11 @@
     <a asp-action="GetAllVehiculos">Volver</a>
 </div>
 
+
 @section Scripts {
     @{
+        //esto lo genera Visual Studio automáticamente cuando se crea un proyecto MVC para activar
+        //la validación de los datos del modelo en el cliente (navegador) y no solo en el servidor
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
