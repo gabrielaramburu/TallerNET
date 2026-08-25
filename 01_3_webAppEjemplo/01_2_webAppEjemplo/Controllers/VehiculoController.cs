@@ -23,7 +23,7 @@ namespace _01_2_webAppEjemplo.Controllers
         }
 
         // https://localhost:7144/Vehiculo/GetAllVehiculos
-        //[Route("GetAllVehiculos")]
+        [HttpGet("GetAllVehiculos")]
         //por defecto se usa el nombre del action,
         //pero podria establecer un nombre diferente
         public IActionResult GetAllVehiculos()
