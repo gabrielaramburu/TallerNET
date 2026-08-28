@@ -1,0 +1,12 @@
+@*
+    Archivo especial de Razor que se ejecuta automáticamente antes de renderizar cada vista completa.
+    
+    Propósito:
+    Define la plantilla de diseño por defecto (Layout = "_Layout") para todas las vistas de la aplicación,
+    evitando tener que declararlo repetitivamente en cada archivo .cshtml (Principio DRY).
+    
+    Nota: Las Vistas Parciales (Partial Views) ignoran este archivo, devolviendo solo su fragmento HTML sin Layout.
+*@
+@{
+    Layout = "_Layout";
+}

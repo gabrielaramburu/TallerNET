@@ -1,0 +1,18 @@
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+<div class="p-5 my-4 bg-light rounded-3 border text-center">
+    <h1 class="display-6 fw-bold mb-3">Demostración de Partial Pages en ASP.NET Core MVC</h1>
+    <p class="lead text-muted mb-4">
+        Selecciona uno de los modos para observar la diferencia de comportamiento al interactuar con los datos.
+    </p>
+    <div class="d-flex justify-content-center gap-3 flex-wrap">
+        <a asp-controller="VehiculosTradicional" asp-action="Index" class="btn btn-outline-danger btn-lg px-4">
+            Modo Tradicional (Full Reload)
+        </a>
+        <a asp-controller="VehiculosAjax" asp-action="Index" class="btn btn-primary btn-lg px-4">
+            Modo Partial Page (AJAX)
+        </a>
+    </div>
+</div>

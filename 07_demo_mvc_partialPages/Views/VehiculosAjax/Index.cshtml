@@ -1,0 +1,107 @@
+@model DemoPartialPages.Models.ViewModels.VehiculosIndexViewModel
+
+@{
+    ViewData["Title"] = "Modo Partial Page (AJAX)";
+}
+
+<div class="my-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="mb-0 text-primary">Modo Partial Page (AJAX)</h3>
+    </div>
+
+    <!-- Campo de prueba de estado -->
+    <div class="mb-3">
+        <div class="input-group">
+            <span class="input-group-text">Campo de prueba de estado:</span>
+            <input type="text" class="form-control" placeholder="Escribe aquí, haz scroll en la grilla y selecciona un vehículo para comprobar que no se pierde el estado..." />
+        </div>
+    </div>
+
+    <!-- Grilla de Vehículos con Scroll Vertical -->
+    <div class="card mb-4">
+        <div class="card-header bg-light d-flex justify-content-between align-items-center py-2">
+            <span class="fw-bold">Catálogo de Vehículos</span>
+            <small class="text-muted">Desplaza el scroll hacia abajo para seleccionar</small>
+        </div>
+        <div class="table-responsive" style="max-height: 280px; overflow-y: auto;">
+            <table class="table table-hover table-striped mb-0 align-middle" id="tabla-vehiculos">
+                <thead class="table-light sticky-top">
+                    <tr>
+                        <th>#</th>
+                        <th>Tipo</th>
+                        <th>Marca y Modelo</th>
+                        <th>Patente</th>
+                        <th>Año</th>
+                        <th>Precio</th>
+                        <th class="text-center">Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var vehiculo in Model.Vehiculos)
+                    {
+                        string badgeClase = vehiculo switch
+                        {
+                            Automovil => "badge-tipo-auto",
+                            Utilitario => "badge-tipo-utilitario",
+                            Camion => "badge-tipo-camion",
+                            _ => "bg-secondary text-white"
+                        };
+
+                        <tr id="fila-vehiculo-@vehiculo.Id">
+                            <td>@vehiculo.Id</td>
+                            <td><span class="badge @badgeClase">@vehiculo.TipoVehiculo</span></td>
+                            <td>@vehiculo.ObtenerNombreCompleto()</td>
+                            <td><code>@vehiculo.Patente</code></td>
+                            <td>@vehiculo.Anio</td>
+                            <td>$ @vehiculo.Precio.ToString("N2")</td>
+                            <td class="text-center">
+                                <button type="button" 
+                                        class="btn btn-sm btn-outline-primary" 
+                                        onclick="cargarDetalleVehiculo(@vehiculo.Id, this)">
+                                    Ver Detalle (AJAX)
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Contenedor Dinámico para la Vista Parcial -->
+    <div id="contenedor-detalle-vehiculo">
+        @await Html.PartialAsync("_DetalleVehiculo", (DemoPartialPages.Models.Vehiculo?)null)
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        async function cargarDetalleVehiculo(idVehiculo, boton) {
+            const contenedor = document.getElementById('contenedor-detalle-vehiculo');
+
+            try {
+                const respuesta = await fetch(`/VehiculosAjax/Detalle?id=${idVehiculo}`);
+
+                if (!respuesta.ok) {
+                    throw new Error(`Error en el servidor: ${respuesta.status}`);
+                }
+
+                const htmlPartial = await respuesta.text();
+                contenedor.innerHTML = htmlPartial;
+
+                // Actualizar resaltado de la fila seleccionada
+                document.querySelectorAll('#tabla-vehiculos tbody tr').forEach(tr => {
+                    tr.classList.remove('table-primary', 'fw-bold');
+                });
+                const fila = document.getElementById(`fila-vehiculo-${idVehiculo}`);
+                if (fila) {
+                    fila.classList.add('table-primary', 'fw-bold');
+                }
+
+            } catch (error) {
+                console.error("Error al cargar detalle:", error);
+                contenedor.innerHTML = `<div class="alert alert-danger">Error al cargar el detalle del vehículo.</div>`;
+            }
+        }
+    </script>
+}

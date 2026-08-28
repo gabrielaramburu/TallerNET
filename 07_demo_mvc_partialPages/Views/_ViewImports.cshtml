@@ -1,0 +1,15 @@
+@*
+    Archivo de importaciones globales para el motor de vistas Razor.
+    
+    Propósito:
+    Define directivas (@using, @addTagHelper, @inject) accesibles automáticamente en todas las vistas 
+    y vistas parciales (.cshtml), evitando tener que declararlas manualmente en cada archivo.
+    
+    - @using: Importa los namespaces de Modelos y ViewModels para tipar las vistas con @model.
+    - @addTagHelper: Habilita los Tag Helpers de ASP.NET Core (asp-controller, asp-action, asp-route, etc.).
+*@
+
+@using DemoPartialPages
+@using DemoPartialPages.Models
+@using DemoPartialPages.Models.ViewModels
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

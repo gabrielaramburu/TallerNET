@@ -1,0 +1,144 @@
+@{
+    ViewData["Title"] = "Readme / Documentación";
+}
+
+<div class="my-3">
+    <h2>Documentación del Proyecto</h2>
+    <hr />
+
+    <div class="row g-4 mb-4">
+        <!-- El Problema -->
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-header bg-light fw-bold">
+                    El Problema en MVC Tradicional
+                </div>
+                <div class="card-body">
+                    <p>
+                        En el flujo MVC estándar, cada interacción que solicita información detallada (por ejemplo, hacer clic en una fila de la grilla) requiere una petición HTTP completa (Full Reload):
+                    </p>
+                    <ul>
+                        <li>El servidor vuelve a procesar y renderizar toda la página (layout, cabeceras, grilla y pie).</li>
+                        <li>La pantalla sufre parpadeo visual y el scroll se reinicia arriba del todo.</li>
+                        <li><strong>Se pierde el estado de la interfaz:</strong> campos de texto que el usuario estaba completando, filtros o selecciones temporales se reinician.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- La Solución -->
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-header bg-light fw-bold">
+                    La Solución: Partial Pages + AJAX
+                </div>
+                <div class="card-body">
+                    <p>
+                        Combinando Vistas Parciales (<code>PartialViewResult</code>) con peticiones asíncronas AJAX (<code>fetch</code>):
+                    </p>
+                    <ul>
+                        <li>El cliente solicita únicamente el fragmento HTML que necesita actualizar (<code>_DetalleVehiculo.cshtml</code>).</li>
+                        <li>El servidor procesa y envía únicamente el HTML del componente, ahorrando procesamiento y transferencia de red.</li>
+                        <li><strong>Se preserva el estado:</strong> solo se actualiza el contenedor de destino; los inputs, la posición del scroll y el resto de la pantalla se mantienen intactos.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabla Comparativa -->
+    <div class="card mb-4">
+        <div class="card-header bg-light fw-bold">
+            Comparativa Técnica
+        </div>
+        <div class="card-body p-0 table-responsive">
+            <table class="table table-bordered table-striped mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Característica</th>
+                        <th>Modo Tradicional (Full Page)</th>
+                        <th>Modo Partial Page + AJAX</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="fw-bold">Tipo de Petición</td>
+                        <td>HTTP GET estándar que recarga toda la página</td>
+                        <td>Petición asíncrona en segundo plano (<code>fetch</code>)</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Respuesta del Servidor</td>
+                        <td>HTML completo del documento (Layout + Vistas)</td>
+                        <td>Fragmento HTML exclusivo de la vista parcial (<code>PartialView</code>)</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Experiencia de Usuario (UX)</td>
+                        <td>Recarga completa, parpadeo y reinicio de scroll</td>
+                        <td>Actualización suave e instantánea sin recarga general</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Estado del Cliente (DOM y Scroll)</td>
+                        <td>Se pierde (campos no guardados se borran, scroll vuelve arriba)</td>
+                        <td>Se preserva completamente</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Reutilización de Código</td>
+                        <td colspan="2" class="text-center">
+                            Ambos enfoques reutilizan la misma Vista Parcial (<code>_DetalleVehiculo.cshtml</code>), el mismo Repositorio y los mismos Modelos.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Capa de Dominio -->
+    <div class="card mb-4">
+        <div class="card-header bg-light fw-bold">
+            Diseño Orientado a Objetos (Capa de Modelo)
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <div class="p-3 border rounded h-100">
+                        <h6><strong>Automóvil</strong></h6>
+                        <small class="text-muted d-block mb-2">Hereda de <code>Vehiculo</code></small>
+                        <ul class="small mb-0">
+                            <li>Cantidad de Puertas</li>
+                            <li>Combustible (Nafta, Diésel, GNC, Híbrido, Eléctrico)</li>
+                            <li>Caja Automática</li>
+                            <li>Aire Acondicionado</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="p-3 border rounded h-100">
+                        <h6><strong>Utilitario</strong></h6>
+                        <small class="text-muted d-block mb-2">Hereda de <code>Vehiculo</code></small>
+                        <ul class="small mb-0">
+                            <li>Capacidad de Carga (kg)</li>
+                            <li>Volumen de Carga (m³)</li>
+                            <li>Puerta Lateral Corrediza</li>
+                            <li>Furgón Cerrado / Pick-up</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="p-3 border rounded h-100">
+                        <h6><strong>Camión</strong></h6>
+                        <small class="text-muted d-block mb-2">Hereda de <code>Vehiculo</code></small>
+                        <ul class="small mb-0">
+                            <li>Cantidad de Ejes</li>
+                            <li>Capacidad (Toneladas)</li>
+                            <li>Acoplado Incluido</li>
+                            <li>Tipo de Cabina</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="alert alert-light border mt-3 mb-0 small">
+                <strong>Patrón Repository:</strong> Los datos se gestionan mediante la interfaz <code>IVehiculoRepository</code> implementada en memoria con una estructura de mapa (<code>Dictionary&lt;int, Vehiculo&gt;</code>) registrada como servicio Singleton.
+            </div>
+        </div>
+    </div>
+</div>

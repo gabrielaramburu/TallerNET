@@ -1,0 +1,142 @@
+@model DemoPartialPages.Models.Vehiculo
+
+@if (Model == null)
+{
+    <div class="card text-center p-4 bg-light">
+        <div class="card-body">
+            <h6 class="card-title text-muted mb-0">Ningún vehículo seleccionado. Selecciona uno en la grilla superior.</h6>
+        </div>
+    </div>
+}
+else
+{
+    string badgeClase = Model switch
+    {
+        Automovil => "badge-tipo-auto",
+        Utilitario => "badge-tipo-utilitario",
+        Camion => "badge-tipo-camion",
+        _ => "bg-secondary text-white"
+    };
+
+    <div class="card shadow-sm">
+        <div class="card-header d-flex justify-content-between align-items-center bg-light">
+            <h5 class="mb-0">
+                Detalle: <strong>@Model.ObtenerNombreCompleto()</strong>
+            </h5>
+            <span class="badge @badgeClase fs-6">@Model.TipoVehiculo</span>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-3 col-sm-6 mb-2">
+                    <span class="text-muted d-block small">Patente:</span>
+                    <span class="fw-bold">@Model.Patente</span>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-2">
+                    <span class="text-muted d-block small">Año:</span>
+                    <span class="fw-bold">@Model.Anio</span>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-2">
+                    <span class="text-muted d-block small">Color:</span>
+                    <span class="fw-bold">@Model.Color</span>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-2">
+                    <span class="text-muted d-block small">Precio:</span>
+                    <span class="fw-bold text-success">$ @Model.Precio.ToString("N2")</span>
+                </div>
+            </div>
+
+            <h6 class="text-muted mb-2">Datos Particulares:</h6>
+
+            @* Pattern Matching sobre el tipo de vehículo *@
+            @switch (Model)
+            {
+                case Automovil auto:
+                    <div class="row g-2">
+                        <div class="col-md-3 col-6">
+                            <div class="p-2 border rounded bg-light">
+                                <small class="text-muted d-block">Puertas:</small>
+                                <strong>@auto.CantidadPuertas</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="p-2 border rounded bg-light">
+                                <small class="text-muted d-block">Combustible:</small>
+                                <strong>@auto.Combustible</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="p-2 border rounded bg-light">
+                                <small class="text-muted d-block">Transmisión:</small>
+                                <strong>@(auto.TieneCajaAutomatica ? "Automática" : "Manual")</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="p-2 border rounded bg-light">
+                                <small class="text-muted d-block">Aire Acondicionado:</small>
+                                <strong>@(auto.TieneAireAcondicionado ? "Sí" : "No")</strong>
+                            </div>
+                        </div>
+                    </div>
+                    break;
+
+                case Utilitario utilitario:
+                    <div class="row g-2">
+                        <div class="col-md-3 col-6">
+                            <div class="p-2 border rounded bg-light">
+                                <small class="text-muted d-block">Capacidad Carga:</small>
+                                <strong>@utilitario.CapacidadCargaKg.ToString("N0") kg</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="p-2 border rounded bg-light">
+                                <small class="text-muted d-block">Volumen Carga:</small>
+                                <strong>@utilitario.VolumenCargaM3.ToString("N1") m³</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="p-2 border rounded bg-light">
+                                <small class="text-muted d-block">Carrocería:</small>
+                                <strong>@(utilitario.EsFurgonCerrado ? "Furgón Cerrado" : "Pick-up")</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="p-2 border rounded bg-light">
+                                <small class="text-muted d-block">Puerta Lateral:</small>
+                                <strong>@(utilitario.TienePuertaLateral ? "Sí" : "No")</strong>
+                            </div>
+                        </div>
+                    </div>
+                    break;
+
+                case Camion camion:
+                    <div class="row g-2">
+                        <div class="col-md-3 col-6">
+                            <div class="p-2 border rounded bg-light">
+                                <small class="text-muted d-block">Cantidad Ejes:</small>
+                                <strong>@camion.CantidadEjes</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="p-2 border rounded bg-light">
+                                <small class="text-muted d-block">Capacidad:</small>
+                                <strong>@camion.CapacidadToneladas.ToString("N1") Tn</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="p-2 border rounded bg-light">
+                                <small class="text-muted d-block">Cabina:</small>
+                                <strong>@camion.TipoCabina</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="p-2 border rounded bg-light">
+                                <small class="text-muted d-block">Acoplado:</small>
+                                <strong>@(camion.TieneAcoplado ? "Sí" : "No")</strong>
+                            </div>
+                        </div>
+                    </div>
+                    break;
+            }
+        </div>
+    </div>
+}

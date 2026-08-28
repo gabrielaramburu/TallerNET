@@ -1,0 +1,77 @@
+@model DemoPartialPages.Models.ViewModels.VehiculosIndexViewModel
+
+@{
+    ViewData["Title"] = "Modo Tradicional";
+}
+
+<div class="my-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="mb-0 text-danger">Modo Tradicional (Full Page Reload)</h3>
+    </div>
+
+    <!-- Campo de prueba de estado -->
+    <div class="mb-3">
+        <div class="input-group">
+            <span class="input-group-text">Campo de prueba de estado:</span>
+            <input type="text" class="form-control" placeholder="Escribe aquí, haz scroll en la grilla y selecciona un vehículo para ver la recarga completa..." />
+        </div>
+    </div>
+
+    <!-- Grilla de Vehículos con Scroll Vertical -->
+    <div class="card mb-4">
+        <div class="card-header bg-light d-flex justify-content-between align-items-center py-2">
+            <span class="fw-bold">Catálogo de Vehículos</span>
+            <small class="text-muted">Desplaza el scroll hacia abajo para seleccionar</small>
+        </div>
+        <div class="table-responsive" style="max-height: 280px; overflow-y: auto;">
+            <table class="table table-hover table-striped mb-0 align-middle">
+                <thead class="table-light sticky-top">
+                    <tr>
+                        <th>#</th>
+                        <th>Tipo</th>
+                        <th>Marca y Modelo</th>
+                        <th>Patente</th>
+                        <th>Año</th>
+                        <th>Precio</th>
+                        <th class="text-center">Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var vehiculo in Model.Vehiculos)
+                    {
+                        bool esSeleccionado = Model.VehiculoSeleccionadoId == vehiculo.Id;
+                        string badgeClase = vehiculo switch
+                        {
+                            Automovil => "badge-tipo-auto",
+                            Utilitario => "badge-tipo-utilitario",
+                            Camion => "badge-tipo-camion",
+                            _ => "bg-secondary text-white"
+                        };
+
+                        <tr class="@(esSeleccionado ? "table-warning fw-bold" : "")">
+                            <td>@vehiculo.Id</td>
+                            <td><span class="badge @badgeClase">@vehiculo.TipoVehiculo</span></td>
+                            <td>@vehiculo.ObtenerNombreCompleto()</td>
+                            <td><code>@vehiculo.Patente</code></td>
+                            <td>@vehiculo.Anio</td>
+                            <td>$ @vehiculo.Precio.ToString("N2")</td>
+                            <td class="text-center">
+                                <a asp-controller="VehiculosTradicional" 
+                                   asp-action="Index" 
+                                   asp-route-id="@vehiculo.Id" 
+                                   class="btn btn-sm @(esSeleccionado ? "btn-warning" : "btn-outline-danger")">
+                                    @(esSeleccionado ? "Seleccionado" : "Ver Detalle")
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Detalle Inferior -->
+    <div>
+        @await Html.PartialAsync("_DetalleVehiculo", Model.VehiculoSeleccionado)
+    </div>
+</div>
