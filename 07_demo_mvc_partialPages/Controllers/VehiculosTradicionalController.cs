@@ -39,6 +39,8 @@ public class VehiculosTradicionalController : Controller
             Vehiculos = vehiculos,
             VehiculoSeleccionado = vehiculoSeleccionado
         };
+        //por convención, el método View() busca la vista que coincide con el nombre del método de acción
+        //(Index) en la carpeta Views/VehiculosTradicional
 
         return View(viewModel);
     }

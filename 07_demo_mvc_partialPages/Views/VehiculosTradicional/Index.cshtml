@@ -70,7 +70,13 @@
         </div>
     </div>
 
-    <!-- Detalle Inferior -->
+    <!-- 
+    Observar que esto no cambia respecto al modo AJAX, ya que la diferencia radica en 
+    que en AJAX se modifica este div con la las funcionalidades de JS:
+        buscar html en servidor
+        reemplazar el contenido del div
+    -->
+
     <div>
         @await Html.PartialAsync("_DetalleVehiculo", Model.VehiculoSeleccionado)
     </div>

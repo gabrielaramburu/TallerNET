@@ -45,6 +45,8 @@ public class VehiculosAjaxController : Controller
             return NotFound("Vehículo no encontrado.");
         }
 
+        //como uso PartialView, el servidor devuelve solo el fragmento HTML de la vista parcial "_DetalleVehiculo.cshtml"
+        //de lo contrario, si usara View(), devolvería toda la página completa con layout y todo
         return PartialView("_DetalleVehiculo", vehiculo);
     }
 }

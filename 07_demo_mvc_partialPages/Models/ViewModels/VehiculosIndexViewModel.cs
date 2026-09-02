@@ -9,5 +9,7 @@ public class VehiculosIndexViewModel
 
     public Vehiculo? VehiculoSeleccionado { get; set; }
 
+    //propiedad de solo lectura que devuelve el Id del vehículo seleccionado,
+    //o null si no hay ninguno seleccionado
     public int? VehiculoSeleccionadoId => VehiculoSeleccionado?.Id;
 }

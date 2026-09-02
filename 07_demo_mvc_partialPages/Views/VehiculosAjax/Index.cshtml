@@ -80,19 +80,23 @@
             const contenedor = document.getElementById('contenedor-detalle-vehiculo');
 
             try {
+                //pido el html al controlador (el navegador resuelve la el host y puerto)
                 const respuesta = await fetch(`/VehiculosAjax/Detalle?id=${idVehiculo}`);
 
                 if (!respuesta.ok) {
                     throw new Error(`Error en el servidor: ${respuesta.status}`);
                 }
 
+                //cargo el html en el contenedor
                 const htmlPartial = await respuesta.text();
                 contenedor.innerHTML = htmlPartial;
 
                 // Actualizar resaltado de la fila seleccionada
+                //limio cualquier seleccion previa de la tabla
                 document.querySelectorAll('#tabla-vehiculos tbody tr').forEach(tr => {
                     tr.classList.remove('table-primary', 'fw-bold');
                 });
+                //localizo la fila corresponpiente al vehiculo y pinto
                 const fila = document.getElementById(`fila-vehiculo-${idVehiculo}`);
                 if (fila) {
                     fila.classList.add('table-primary', 'fw-bold');
