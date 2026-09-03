@@ -1,0 +1,35 @@
+@{
+    //esta view no se usa, se construyó para ser utilizada antes de integrar la autenticación con OpenID Connect.
+    // Actualmente, la aplicación redirige automáticamente al proveedor de identidad (Auth0) para iniciar sesión.
+    ViewData["Title"] = "Iniciar Sesión - OpenID Connect";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-7 col-lg-6">
+        <div class="card shadow border-0">
+            <div class="card-header bg-primary text-white text-center py-3">
+                <h4 class="mb-0 fw-bold"><i class="bi bi-shield-lock me-2"></i>Autenticación OpenID Connect</h4>
+            </div>
+            <div class="card-body p-4 text-center">
+                <i class="bi bi-person-bounding-box text-primary" style="font-size: 3.5rem;"></i>
+                
+                <h5 class="mt-3 fw-bold">Paso previo a la configuración de Auth0</h5>
+                <p class="text-muted">
+                    Actualmente la aplicación está en la <strong>Fase 1 (Estructura Base sin Seguridad)</strong>.
+                </p>
+                <div class="alert alert-info text-start small">
+                    <h6 class="fw-bold"><i class="bi bi-info-circle me-1"></i>¿Qué ocurrirá en la siguiente fase?</h6>
+                    <ul class="mb-0 ps-3">
+                        <li>Configuraremos tu cuenta de <strong>Auth0</strong> (o el IdP OpenID de tu preferencia).</li>
+                        <li>Al presionar este botón, serás redirigido a la pantalla de login federada del proveedor.</li>
+                        <li>Al iniciar sesión, Auth0 emitirá un <strong>ID Token</strong> con tus Claims y volverás autenticado.</li>
+                    </ul>
+                </div>
+
+                <a asp-controller="Cursos" asp-action="Index" class="btn btn-outline-secondary mt-2">
+                    <i class="bi bi-arrow-left me-1"></i>Volver al Catálogo de Cursos
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

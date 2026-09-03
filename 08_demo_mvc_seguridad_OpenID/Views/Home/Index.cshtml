@@ -1,0 +1,50 @@
+@{
+    ViewData["Title"] = "Inicio - Plataforma Educativa";
+    var esDocente = User.IsInRole("Docente") || User.IsInRole("Admin");
+    var esEstudiante = User.IsInRole("Estudiante") || (User.Identity?.IsAuthenticated == true && !esDocente);
+}
+
+<div class="p-5 mb-4 bg-light rounded-3 shadow-sm border text-center">
+    <div class="container-fluid py-4">
+        <span class="badge bg-dark fs-6 mb-2">
+            <i class="bi bi-shield-lock-fill me-1"></i>Seguridad con OpenID Connect
+        </span>
+        <h1 class="display-5 fw-bold text-dark mt-2">Portal de Cursos y Capacitaciones</h1>
+        <p class="col-md-8 mx-auto fs-5 text-muted">
+            Aplicación de demostración para el aprendizaje de autenticación y autorización delegada con OpenID Connect.
+        </p>
+        
+        <div class="d-flex flex-wrap justify-content-center gap-3 mt-4">
+            @if (esDocente)
+            {
+                <!-- Acciones para Docente: Crear Curso (Amarillo) y Mis Cursos Publicados (Gris) -->
+                <a asp-controller="Cursos" asp-action="Crear" class="btn btn-warning text-dark btn-lg">
+                    <i class="bi bi-plus-circle me-2"></i>Crear Nuevo Curso
+                </a>
+                <a asp-controller="Cursos" asp-action="Index" class="btn btn-secondary btn-lg">
+                    <i class="bi bi-journal-bookmark me-2"></i>Mis Cursos Publicados
+                </a>
+            }
+            else if (esEstudiante)
+            {
+                <!-- Acciones para Estudiante: Catálogo (Gris) y Mis Cursos Inscritos (Azul) -->
+                <a asp-controller="Cursos" asp-action="Index" class="btn btn-secondary btn-lg">
+                    <i class="bi bi-journal-bookmark me-2"></i>Ver Catálogo de Cursos
+                </a>
+                <a asp-controller="Cursos" asp-action="MisCursos" class="btn btn-primary btn-lg">
+                    <i class="bi bi-mortarboard me-2"></i>Mis Cursos
+                </a>
+            }
+            else
+            {
+                <!-- Acciones para Visitante Anónimo: Catálogo (Gris) e Iniciar Sesión (Azul) -->
+                <a asp-controller="Cursos" asp-action="Index" class="btn btn-secondary btn-lg">
+                    <i class="bi bi-journal-bookmark me-2"></i>Ver Catálogo de Cursos
+                </a>
+                <a asp-controller="Cuenta" asp-action="Login" class="btn btn-primary btn-lg">
+                    <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar Sesión
+                </a>
+            }
+        </div>
+    </div>
+</div>

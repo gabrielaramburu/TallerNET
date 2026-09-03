@@ -1,0 +1,77 @@
+@using _08_demo_mvc_seguridad_OpenID.Models
+@model _08_demo_mvc_seguridad_OpenID.ViewModels.Cursos.CrearCursoViewModel
+
+@{
+    ViewData["Title"] = "Crear Nuevo Curso (Docente)";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-warning text-dark py-3 d-flex justify-content-between align-items-center">
+                <h4 class="mb-0 fw-bold">
+                    <i class="bi bi-journal-plus me-2"></i>Publicar Nuevo Curso
+                </h4>
+                <span class="badge bg-dark text-white">Rol: Docente / Admin</span>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="Crear" method="post">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Titulo" class="form-label fw-bold text-dark"></label>
+                        <input asp-for="Titulo" class="form-control" placeholder="Ej: Seguridad Web con OpenID Connect" />
+                        <span asp-validation-for="Titulo" class="text-danger small"></span>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label asp-for="Categoria" class="form-label fw-bold text-dark"></label>
+                            <input asp-for="Categoria" class="form-control" placeholder="Ej: Seguridad, Web, Datos" />
+                            <span asp-validation-for="Categoria" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="HorasEstimadas" class="form-label fw-bold text-dark"></label>
+                            <input asp-for="HorasEstimadas" type="number" class="form-control" min="1" max="300" />
+                            <span asp-validation-for="HorasEstimadas" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Nivel" class="form-label fw-bold text-dark"></label>
+                        <select asp-for="Nivel" class="form-select" asp-items="Html.GetEnumSelectList<NivelCurso>()"></select>
+                        <span asp-validation-for="Nivel" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="DescripcionCorta" class="form-label fw-bold text-dark"></label>
+                        <input asp-for="DescripcionCorta" class="form-control" placeholder="Resumen breve para la tarjeta de presentación" />
+                        <span asp-validation-for="DescripcionCorta" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="DescripcionCompleta" class="form-label fw-bold text-dark"></label>
+                        <textarea asp-for="DescripcionCompleta" class="form-control" rows="4" placeholder="Detalle completo de los contenidos del programa formativo"></textarea>
+                        <span asp-validation-for="DescripcionCompleta" class="text-danger small"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+                        <!-- Acción Cancelar: Gris -->
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left me-1"></i>Cancelar y Volver
+                        </a>
+                        
+                        <!-- Acción Docente: Amarillo -->
+                        <button type="submit" class="btn btn-warning text-dark px-4 fw-bold">
+                            <i class="bi bi-check-circle me-1"></i>Publicar Curso en Mi Catálogo
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

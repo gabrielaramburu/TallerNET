@@ -1,0 +1,114 @@
+@using _08_demo_mvc_seguridad_OpenID.Models
+@model _08_demo_mvc_seguridad_OpenID.ViewModels.Cursos.TarjetaCursoViewModel
+
+@{
+    ViewData["Title"] = "Detalle del Curso - " + Model.Curso.Titulo;
+
+    var (claseBadgeNivel, iconoNivel) = Model.Curso.Nivel switch
+    {
+        NivelCurso.Principiante => ("badge-nivel-principiante", "bi-reception-1"),
+        NivelCurso.Intermedio => ("badge-nivel-intermedio", "bi-reception-3"),
+        NivelCurso.Avanzado => ("badge-nivel-avanzado", "bi-reception-4"),
+        _ => ("bg-light text-dark border", "bi-bar-chart")
+    };
+}
+
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-secondary">Inicio</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Cursos" asp-action="Index" class="text-secondary">Cursos</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Model.Curso.Titulo</li>
+    </ol>
+</nav>
+
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-body p-4">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <span class="badge bg-secondary text-white fs-6">
+                        <i class="bi @Model.Curso.IconoBootstrap me-1"></i>@Model.Curso.Categoria
+                    </span>
+                    <span class="badge @claseBadgeNivel fs-6">
+                        <i class="bi @iconoNivel me-1"></i>Nivel @Model.Curso.Nivel
+                    </span>
+                </div>
+                <h1 class="h2 fw-bold text-dark">@Model.Curso.Titulo</h1>
+                <p class="lead text-muted">@Model.Curso.DescripcionCorta</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                @if (Model.EstaInscrito)
+                {
+                    <div class="alert alert-primary d-inline-block text-start mb-0">
+                        <i class="bi bi-check-circle-fill me-2 fs-5 text-primary"></i>
+                        <strong>¡Ya estás inscrito en este curso!</strong>
+                    </div>
+                }
+                else if (Model.EsUsuarioAutenticado)
+                {
+                    <form asp-controller="Cursos" asp-action="Inscribirse" method="post">
+                        <input type="hidden" name="cursoId" value="@Model.Curso.Id" />
+                        <!-- Acción Estudiante: Azul -->
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-pencil-square me-2"></i>Inscribirme a este Curso
+                        </button>
+                    </form>
+                }
+                else
+                {
+                    <div class="card bg-light border-0 p-3 text-start">
+                        <p class="small text-muted mb-2"><i class="bi bi-info-circle me-1"></i>Para inscribirte debes identificarte con tu cuenta de Estudiante.</p>
+                        <!-- Acción Estudiante: Azul -->
+                        <a asp-controller="Cuenta" asp-action="Login" asp-route-returnUrl="@Url.Action("Detalle", "Cursos", new { id = Model.Curso.Id })" class="btn btn-primary">
+                            <i class="bi bi-box-arrow-in-right me-1"></i>Iniciar Sesión para Inscribirme
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="card shadow-sm border-0 p-4 mb-4">
+            <h4 class="fw-bold text-dark mb-3"><i class="bi bi-file-text me-2"></i>Descripción del Programa</h4>
+            <p class="text-secondary" style="font-size: 1.1rem; line-height: 1.7;">
+                @Model.Curso.DescripcionCompleta
+            </p>
+            <div class="mt-4">
+                <!-- Acción Visitante: Gris -->
+                <a asp-controller="Cursos" asp-action="Index" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left me-1"></i>Volver al Catálogo de Cursos
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card shadow-sm border-0 p-4">
+            <h5 class="fw-bold text-dark mb-3"><i class="bi bi-info-circle me-2"></i>Ficha Técnica</h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                    <span class="text-muted"><i class="bi bi-person-badge me-2"></i>Docente a cargo:</span>
+                    <span class="fw-semibold">@Model.Curso.Docente.NombreCompleto</span>
+                </li>
+                @if (!string.IsNullOrEmpty(Model.Curso.Docente.Especialidad))
+                {
+                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                        <span class="text-muted"><i class="bi bi-mortarboard me-2"></i>Especialidad:</span>
+                        <span class="fw-semibold">@Model.Curso.Docente.Especialidad</span>
+                    </li>
+                }
+                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                    <span class="text-muted"><i class="bi bi-clock-history me-2"></i>Carga horaria:</span>
+                    <span class="fw-semibold">@Model.Curso.HorasEstimadas horas</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                    <span class="text-muted"><i class="bi bi-bar-chart me-2"></i>Nivel de dificultad:</span>
+                    <span class="badge @claseBadgeNivel">@Model.Curso.Nivel</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,75 @@
+@using _08_demo_mvc_seguridad_OpenID.Models
+@model _08_demo_mvc_seguridad_OpenID.ViewModels.Cursos.TarjetaCursoViewModel
+
+@{
+    var (claseBadgeNivel, iconoNivel) = Model.Curso.Nivel switch
+    {
+        NivelCurso.Principiante => ("badge-nivel-principiante", "bi-reception-1"),
+        NivelCurso.Intermedio => ("badge-nivel-intermedio", "bi-reception-3"),
+        NivelCurso.Avanzado => ("badge-nivel-avanzado", "bi-reception-4"),
+        _ => ("bg-light text-dark border", "bi-bar-chart")
+    };
+
+    var esDocente = User.IsInRole("Docente") || User.IsInRole("Admin");
+}
+
+<div class="card h-100 shadow-sm border-0 position-relative">
+    <div class="card-header bg-white border-0 pt-3 pb-0 d-flex justify-content-between align-items-center">
+        <span class="badge bg-secondary text-white">
+            <i class="bi @Model.Curso.IconoBootstrap me-1"></i>@Model.Curso.Categoria
+        </span>
+        
+        <!-- Distintivo de Nivel con color pastel garantizado -->
+        <span class="badge @claseBadgeNivel">
+            <i class="bi @iconoNivel me-1"></i>@Model.Curso.Nivel
+        </span>
+    </div>
+    <div class="card-body d-flex flex-column">
+        <h5 class="card-title fw-bold text-dark mt-2">@Model.Curso.Titulo</h5>
+        <p class="card-text text-muted flex-grow-1">@Model.Curso.DescripcionCorta</p>
+
+        <div class="bg-light rounded p-2 mb-3 text-secondary small">
+            <div class="d-flex justify-content-between mb-1">
+                <span><i class="bi bi-person-badge me-1"></i><strong>Docente:</strong></span>
+                <span>@Model.Curso.Docente.NombreCompleto</span>
+            </div>
+            <div class="d-flex justify-content-between">
+                <span><i class="bi bi-clock me-1"></i><strong>Carga horaria:</strong></span>
+                <span>@Model.Curso.HorasEstimadas horas</span>
+            </div>
+        </div>
+
+        <div class="d-grid gap-2">
+            <!-- Acción de Consulta: Gris -->
+            <a asp-controller="Cursos" asp-action="Detalle" asp-route-id="@Model.Curso.Id" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-eye me-1"></i>Ver Detalle
+            </a>
+
+            <!-- Acciones de Inscripción: Exclusivas de Estudiante / Visitante -->
+            @if (!esDocente)
+            {
+                if (Model.EstaInscrito)
+                {
+                    <button class="btn btn-outline-primary btn-sm" disabled>
+                        <i class="bi bi-check-circle-fill me-1"></i>Ya estás inscrito
+                    </button>
+                }
+                else if (Model.EsUsuarioAutenticado)
+                {
+                    <form asp-controller="Cursos" asp-action="Inscribirse" method="post" class="d-inline">
+                        <input type="hidden" name="cursoId" value="@Model.Curso.Id" />
+                        <button type="submit" class="btn btn-primary btn-sm w-100">
+                            <i class="bi bi-pencil-square me-1"></i>Inscribirme
+                        </button>
+                    </form>
+                }
+                else
+                {
+                    <a asp-controller="Cuenta" asp-action="Login" asp-route-returnUrl="@Url.Action("Detalle", "Cursos", new { id = Model.Curso.Id })" class="btn btn-primary btn-sm">
+                        <i class="bi bi-box-arrow-in-right me-1"></i>Iniciar sesión para inscribirte
+                    </a>
+                }
+            }
+        </div>
+    </div>
+</div>

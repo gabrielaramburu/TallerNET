@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37614.0 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "08_demo_mvc_seguridad_OpenID", "08_demo_mvc_seguridad_OpenID.csproj", "{B44C2039-744E-3208-0B9C-BECF69D2C325}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B44C2039-744E-3208-0B9C-BECF69D2C325}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B44C2039-744E-3208-0B9C-BECF69D2C325}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B44C2039-744E-3208-0B9C-BECF69D2C325}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B44C2039-744E-3208-0B9C-BECF69D2C325}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {23DA180C-3A19-46AF-AADB-54DF0834E78D}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,144 @@
+@{
+    ViewData["Title"] = "README - Documentación y Esquema de Seguridad";
+}
+
+<div class="row mb-4 align-items-center">
+    <div class="col-md-8">
+        <h1 class="display-6 fw-bold text-dark">
+            <i class="bi bi-file-earmark-code text-primary me-2"></i>README: Documentación de la Aplicación
+        </h1>
+        <p class="text-muted lead mb-0">
+            Guía de referencia sobre la arquitectura, funcionalidades disponibles, esquema de roles y código de colores de la interfaz.
+        </p>
+    </div>
+    <div class="col-md-4 text-md-end mt-3 mt-md-0">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">
+            <i class="bi bi-arrow-left me-1"></i>Volver al Inicio
+        </a>
+    </div>
+</div>
+
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-header bg-white border-0 pt-4 px-4">
+        <h3 class="fw-bold text-dark mb-1">
+            <i class="bi bi-diagram-3-fill text-primary me-2"></i>Esquema de Funcionalidades y Roles del Sistema
+        </h3>
+        <p class="text-muted">
+            Este cuadro resume los perfiles de usuario, su estado de autenticación y los permisos correspondientes:
+        </p>
+    </div>
+    <div class="card-body px-4 pb-4">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle border">
+                <thead class="table-dark">
+                    <tr>
+                        <th style="width: 20%;">Rol / Perfil</th>
+                        <th style="width: 25%;">Estado de Autenticación</th>
+                        <th style="width: 40%;">Funcionalidades Permitidas</th>
+                        <th style="width: 15%; text-align: center;">Color de Botones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <span class="badge bg-secondary fs-6"><i class="bi bi-globe me-1"></i>Visitante</span>
+                        </td>
+                        <td>
+                            <span class="text-muted"><i class="bi bi-person-x me-1"></i>Anónimo (Sin Login)</span>
+                        </td>
+                        <td>
+                            <ul class="mb-0 ps-3">
+                                <li>Navegar por el catálogo general de cursos.</li>
+                                <li>Ver el detalle completo y ficha técnica de cualquier curso.</li>
+                            </ul>
+                        </td>
+                        <td class="text-center">
+                            <span class="badge bg-secondary px-3 py-2">Gris</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="badge bg-primary fs-6"><i class="bi bi-mortarboard-fill me-1"></i>Estudiante</span>
+                        </td>
+                        <td>
+                            <span class="text-primary fw-semibold"><i class="bi bi-check-circle-fill me-1"></i>Autenticado con OpenID</span>
+                        </td>
+                        <td>
+                            <ul class="mb-0 ps-3">
+                                <li>Todo lo permitido al Visitante.</li>
+                                <li><strong>Inscribirse</strong> a cursos disponibles en el catálogo.</li>
+                                <li>Acceder a <strong>"Mis Cursos"</strong> (cursos en los que está inscrito el estudiante).</li>
+                                <li>Consultar su <strong>"Perfil y Claims"</strong> emitidos por el proveedor OpenID.</li>
+                            </ul>
+                        </td>
+                        <td class="text-center">
+                            <span class="badge bg-primary px-3 py-2">Azul</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="badge bg-warning text-dark fs-6"><i class="bi bi-person-workspace me-1"></i>Docente / Admin</span>
+                        </td>
+                        <td>
+                            <span class="text-warning-emphasis fw-semibold"><i class="bi bi-shield-check me-1"></i>Autenticado + Rol asignado</span>
+                        </td>
+                        <td>
+                            <ul class="mb-0 ps-3">
+                                <li>Todo lo permitido al Docente.</li>
+                                <li><strong>Crear y publicar</strong> nuevos cursos en el catálogo.</li>
+                                <li>Gestionar la información de sus cursos asignados.</li>
+                            </ul>
+                        </td>
+                        <td class="text-center">
+                            <span class="badge bg-warning text-dark px-3 py-2">Amarillo</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body p-4">
+                <h4 class="fw-bold text-dark mb-3"><i class="bi bi-palette text-primary me-2"></i>Convención Visual de Botones</h4>
+                <p class="text-muted">
+                    Para facilitar la comprensión del modelo de seguridad, cada botón en la aplicación respeta el color del rol requerido:
+                </p>
+                <div class="d-flex flex-column gap-2">
+                    <div class="d-flex align-items-center gap-3 p-2 bg-light rounded">
+                        <button class="btn btn-secondary btn-sm" disabled>Botón Gris</button>
+                        <span class="small text-muted">Acciones públicas abiertas a cualquier visitante.</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-3 p-2 bg-light rounded">
+                        <button class="btn btn-primary btn-sm" disabled>Botón Azul</button>
+                        <span class="small text-muted">Acciones de estudiante que requieren autenticación OpenID.</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-3 p-2 bg-light rounded">
+                        <button class="btn btn-warning text-dark btn-sm" disabled>Botón Amarillo</button>
+                        <span class="small text-muted">Acciones administrativas o docentes con rol asignado.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body p-4">
+                <h4 class="fw-bold text-dark mb-3"><i class="bi bi-layers text-success me-2"></i>Arquitectura y POO</h4>
+                <p class="text-muted">
+                    Principios de diseño implementados en este proyecto:
+                </p>
+                <ul class="text-muted small">
+                    <li class="mb-2"><strong>Entidades de Dominio Puras:</strong> <code>Curso</code>, <code>Docente</code>, <code>Estudiante</code>, <code>Inscripcion</code> con asociaciones directas por objetos.</li>
+                    <li class="mb-2"><strong>Tipado Fuerte:</strong> Uso de <code>enum NivelCurso</code> (Principiante, Intermedio, Avanzado).</li>
+                    <li class="mb-2"><strong>Patrón Repository en Memoria:</strong> <code>ICursoRepositorio</code> con estructuras concurrentes (<code>ConcurrentDictionary</code>) sin depender de base de datos.</li>
+                    <li><strong>Vistas Parciales:</strong> Modularización de UI con <code>_TarjetaCursoPartial</code>, <code>_LoginStatusPartial</code> y <code>_TablaClaimsPartial</code>.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

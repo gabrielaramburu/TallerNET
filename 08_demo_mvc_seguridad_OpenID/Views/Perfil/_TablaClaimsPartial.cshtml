@@ -1,0 +1,38 @@
+@model List<_08_demo_mvc_seguridad_OpenID.ViewModels.Perfil.ItemClaimViewModel>
+
+@if (Model == null || !Model.Any())
+{
+    <div class="alert alert-secondary">
+        <i class="bi bi-info-circle me-1"></i>No hay Claims disponibles para mostrar.
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-hover align-middle border bg-white shadow-sm rounded">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col" style="width: 25%;">Tipo de Claim (Type)</th>
+                    <th scope="col" style="width: 35%;">Valor (Value)</th>
+                    <th scope="col" style="width: 40%;">Significado en OpenID Connect</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var claim in Model)
+                {
+                    <tr>
+                        <td>
+                            <code class="fw-bold text-primary">@claim.Tipo</code>
+                        </td>
+                        <td>
+                            <span class="text-break font-monospace small bg-light p-1 rounded">@claim.Valor</span>
+                        </td>
+                        <td>
+                            <small class="text-muted">@claim.ExplicacionDidactica</small>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
