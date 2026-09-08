@@ -1,4 +1,11 @@
 @{
+    //TODO:
+    //´Determinar que todo usuario autenticado que no sea Docente o Admin, se considere Estudiante es claramente una
+    //regla importante de nuestro negocio. No debería estar aquí (en la capa de presentación)
+    //Además si necesito en otra vista saber si es estudiante, tendría que repetir la misma lógica. 
+    // Esto debería estar en un servicio de negocio. ASP.NET Core ofrece una forma de mejorar esto
+    // mediante Claims y Policies. Pero para fines de esta demo, lo dejamos asi para ver como el código 
+    //generado por el LLM tiene fallas de diseño.
     ViewData["Title"] = "Inicio - Plataforma Educativa";
     var esDocente = User.IsInRole("Docente") || User.IsInRole("Admin");
     var esEstudiante = User.IsInRole("Estudiante") || (User.Identity?.IsAuthenticated == true && !esDocente);
