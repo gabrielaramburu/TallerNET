@@ -112,6 +112,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 // 6. Middleware de Seguridad (IMPORTANTE: Authentication debe ir antes de Authorization)
+//por cada request leo la cookie de autenticación, si existe, y reconstruyo el User con sus Claims
 app.UseAuthentication();
 app.UseAuthorization();
 

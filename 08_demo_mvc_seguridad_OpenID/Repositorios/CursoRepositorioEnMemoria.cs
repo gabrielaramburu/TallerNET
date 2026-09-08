@@ -1,5 +1,6 @@
-using System.Collections.Concurrent;
 using _08_demo_mvc_seguridad_OpenID.Models;
+using System;
+using System.Collections.Concurrent;
 
 namespace _08_demo_mvc_seguridad_OpenID.Repositorios;
 
@@ -216,8 +217,21 @@ public class CursoRepositorioEnMemoria : ICursoRepositorio
         if (string.IsNullOrWhiteSpace(usuarioSub) || !_cursos.TryGetValue(cursoId, out var curso))
             return false;
 
+        //TODO: es muy mala práctica realizar exclusión mutua (lock)
+        //en un servidor web, ya que puede generar bloqueos y afectar la escalabilidad. 
+        // de todas manera tener un repositorio en memoria tampoco es práctico y solo se usa para prueba.
+
+
         lock (_lockInscripciones)
         {
+            //si el estudiante no existe, lo creamos y lo agregamos al diccionario de estudiantes 
+            // Estrageia 2: creación por demanda
+       
+
+            //TODO: observar como esta funcionalidad de agregar estudiante debería de estar
+            //encapsulada en un método aparte que se llame por ejemplo "ObtenerOCrearEstudiante"
+            //Este método realiza más de lo que le nombre sugiere, ya que no solo Inscribe sino que también crea un estudiante si no existe.
+            //Esto es un error de diseño, ya que el nombre del método no refleja su verdadera funcionalidad. 
             if (!_estudiantes.TryGetValue(usuarioSub, out var estudiante))
             {
                 estudiante = new Estudiante

@@ -14,22 +14,6 @@ Proyecto educativo en **ASP.NET Core MVC** diseñado para enseñar cómo delegar
 
 ---
 
-## 🧩 Principios de Diseño y Arquitectura
-
-1. **Programación Orientada a Objetos (POO)**:
-   * Entidades de dominio puras: [`Curso`](Models/Curso.cs), [`Docente`](Models/Docente.cs), [`Estudiante`](Models/Estudiante.cs), [`Inscripcion`](Models/Inscripcion.cs).
-   * Tipado fuerte mediante el enum [`NivelCurso`](Models/NivelCurso.cs).
-   * Separación explícita entre `Models/` (dominio) y `ViewModels/` (modelos de vista).
-
-2. **Patrón Repository en Memoria**:
-   * Interfaz [`ICursoRepositorio`](Repositorios/ICursoRepositorio.cs) y su implementación [`CursoRepositorioEnMemoria`](Repositorios/CursoRepositorioEnMemoria.cs) con concurrencia segura mediante `ConcurrentDictionary`.
-
-3. **Vistas Parciales (Partial Views)**:
-   * `_TarjetaCursoPartial.cshtml`: Renderizado modular de tarjetas de cursos.
-   * `_LoginStatusPartial.cshtml`: Barra de navegación con estado de sesión.
-   * `_TablaClaimsPartial.cshtml`: Explorador interactivo de Claims de OpenID.
-
----
 
 ## 🚀 Cómo ejecutar el proyecto
 

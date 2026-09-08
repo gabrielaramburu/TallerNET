@@ -11,21 +11,18 @@ namespace _08_demo_mvc_seguridad_OpenID.Controllers;
 /// </summary>
 public class CuentaController : Controller
 {
-    /// <summary>
-    /// Inicia el flujo de autenticación delegada enviando una respuesta Challenge al middleware de OpenID Connect.
-    /// Esto redirige al usuario hacia la página de login de Auth0.
-    /// </summary>
-    /// <param name="returnUrl">URL a la que volver tras autenticarse con éxito.</param>
+   
     public IActionResult Login(string? returnUrl = null)
     {
         var propiedadesAutenticacion = new AuthenticationProperties
         {
+            //URL a la que volver tras autenticarse con éxito
             RedirectUri = returnUrl ?? Url.Action("Index", "Home")
         };
 
         // Dispara el desafío OpenID Connect
         //Challenge() es un método de ASP.NET Core que inicia el proceso de autenticación.
-        //En web MVC con OpenID Connect, se traduce en una redirección HTTP 302 hacia la pantalla de login del Proveedor de Identidad(Auth0)."*
+        // Se envía una petición de redirección HTTP 302 hacia la pantalla de login del Proveedor de Identidad(Auth0)."*
         return Challenge(propiedadesAutenticacion, OpenIdConnectDefaults.AuthenticationScheme);
     }
 
