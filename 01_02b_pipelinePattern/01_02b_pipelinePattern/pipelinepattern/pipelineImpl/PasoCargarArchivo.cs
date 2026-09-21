@@ -10,8 +10,10 @@ namespace _01_02b_pipelinePattern.pipelinepattern.pipelineImpl
     {
         public void hacerAlgo(IContexto contexto)
         {
-            
-            String camino = @"C:\workspace\tallerNET\01_02b_pipelinePattern\01_02b_pipelinePattern\pipelinepattern\pipelineImpl\PruebaPipeLine.txt";
+
+            //String camino = @"C:\workspace\tallerNET\01_02b_pipelinePattern\01_02b_pipelinePattern\pipelinepattern\pipelineImpl\PruebaPipeLine.txt";
+            String camino = @"/home/gabriel/workspace/TallerNET/01_02b_pipelinePattern/01_02b_pipelinePattern/pipelinepattern/pipelineImpl/PruebaPipeLine.txt";
+
             //el uso del @ le indica al compilador que la siguiente cadena se interpreta literalmente
             //es decir ingnorando los caracteres especiales
             //en este caso la \

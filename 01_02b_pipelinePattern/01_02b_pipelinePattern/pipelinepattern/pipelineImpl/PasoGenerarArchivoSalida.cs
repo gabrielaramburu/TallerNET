@@ -10,8 +10,9 @@ namespace _01_02b_pipelinePattern.pipelinepattern.pipelineImpl
     {
         public void hacerAlgo(IContexto contexto)
         {
-            
-            String archivoSalida = @"c:\Users\Gabriel Aramburu\Salida.txt";
+
+            //String archivoSalida = @"c:\Users\Gabriel Aramburu\Salida.txt";
+            String archivoSalida = @"./../../../Salida.txt";
             File.WriteAllText(archivoSalida, ((InfoTexto)contexto).Texto);
             Console.WriteLine("Se generó archivo de salida");
         }

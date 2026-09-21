@@ -37,6 +37,9 @@ Para que un cliente de IA (como **Antigravity** o Claude Desktop) reconozca y ut
     }
   }
 }
-```
+
+Para el caso de Antigravity CLI, el archivo de configuración esta en la carpeta ~/.gemini/config/mcp_config.json (linux)
+Dependiendo del host, esto también se puede configurar desde la interface gráfica.
+
 
 *Una vez configurado y reiniciado el cliente de IA, ¡podrás preguntarle por horarios de exámenes o tutorías y verás cómo usa las herramientas de forma autónoma!*
