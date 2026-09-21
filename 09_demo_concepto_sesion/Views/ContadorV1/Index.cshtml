@@ -1,0 +1,15 @@
+@model DemoSesion.Models.Contador
+
+@{
+    ViewData["Title"] = "Contador V1";
+}
+
+<p>Valor actual: @Model.Valor</p>
+
+<form asp-controller="ContadorV1" asp-action="Incrementar" method="post">
+    <button type="submit">Incrementar</button>
+</form>
+
+<p>
+    <a asp-controller="Home" asp-action="Index">Volver al inicio</a>
+</p>

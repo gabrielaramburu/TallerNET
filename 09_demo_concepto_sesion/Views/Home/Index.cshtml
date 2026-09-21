@@ -1,0 +1,181 @@
+@{
+    ViewData["Title"] = "Inicio - Comparativa de Estado";
+}
+
+<h1>Demostración de Sesión y Manejo de Estado</h1>
+<p>Selecciona una pestaña para ver la explicación, el diagrama de secuencia y acceder a la prueba:</p>
+
+<style>
+    .tab-container {
+        display: flex;
+        border-bottom: 2px solid #ccc;
+        margin-top: 20px;
+        gap: 5px;
+        flex-wrap: wrap;
+    }
+    .tab-boton {
+        background-color: #f1f1f1;
+        border: 1px solid #ccc;
+        border-bottom: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 600;
+        border-radius: 5px 5px 0 0;
+        transition: 0.2s;
+    }
+    .tab-boton:hover {
+        background-color: #ddd;
+    }
+    .tab-boton.activo {
+        background-color: #007bff;
+        color: white;
+        border-color: #007bff;
+    }
+    .tab-boton.reflexion {
+        background-color: #fff3cd;
+        border-color: #ffeeba;
+        color: #856404;
+    }
+    .tab-boton.reflexion.activo {
+        background-color: #ff9800;
+        color: white;
+        border-color: #ff9800;
+    }
+    .tab-contenido {
+        display: none;
+        padding: 25px;
+        border: 1px solid #ccc;
+        border-top: none;
+        background-color: #fff;
+        border-radius: 0 0 5px 5px;
+    }
+    .tab-contenido.activo {
+        display: block;
+    }
+    .boton-prueba {
+        display: inline-block;
+        margin: 15px 0;
+        padding: 10px 18px;
+        background-color: #28a745;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        font-weight: bold;
+    }
+    .boton-prueba:hover {
+        background-color: #218838;
+        color: white;
+    }
+    .diagrama-img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin-top: 15px;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+    }
+    .caja-reflexion {
+        background-color: #fdfdfe;
+        border-left: 5px solid #ff9800;
+        padding: 20px;
+        margin: 15px 0;
+        border-radius: 4px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .pregunta-item {
+        background: #fff;
+        border: 1px solid #e9ecef;
+        padding: 15px;
+        border-radius: 6px;
+        margin-bottom: 12px;
+    }
+    details summary {
+        cursor: pointer;
+        font-weight: bold;
+        color: #007bff;
+        padding: 8px 0;
+    }
+    .solucion-card {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 6px;
+        padding: 15px;
+        margin-top: 10px;
+    }
+</style>
+
+<div class="tab-container">
+    <button class="tab-boton activo" onclick="abrirPestana(event, 'tab-v1')">V1: Sin Estado</button>
+    <button class="tab-boton" onclick="abrirPestana(event, 'tab-v2')">V2: Singleton</button>
+    <button class="tab-boton" onclick="abrirPestana(event, 'tab-v3')">V3: Sesión Servidor</button>
+    <button class="tab-boton" onclick="abrirPestana(event, 'tab-v4')">V4: Cliente (SPA)</button>
+   
+</div>
+
+<!-- Tab V1 -->
+<div id="tab-v1" class="tab-contenido activo">
+    <h2>Versión 1: Sin Estado (Ciclo de Vida por Solicitud)</h2>
+    <p>
+        La instancia del controlador y del contador se crean en cada solicitud HTTP y se destruyen inmediatamente al enviar la respuesta al navegador.
+        El contador nunca acumula incrementos sucesivos.
+    </p>
+    <a class="boton-prueba" asp-controller="ContadorV1" asp-action="Index">Probar Contador V1 &rarr;</a>
+    <h3>Diagrama de Secuencia:</h3>
+    <img class="diagrama-img" src="~/img/diagrama-v1.png" onerror="this.onerror=null; this.src='/img/diagrama-v1.svg';" alt="Diagrama de secuencia Contador V1" />
+</div>
+
+<!-- Tab V2 -->
+<div id="tab-v2" class="tab-contenido">
+    <h2>Versión 2: Servicio Singleton (Estado Global en Memoria)</h2>
+    <p>
+        Utiliza un servicio registrado como Singleton. El contador acumula su valor entre peticiones, pero al existir una única instancia viva en la memoria del servidor,
+        el estado es <strong>compartido por todos los navegadores y usuarios</strong>.
+    </p>
+    <a class="boton-prueba" asp-controller="ContadorV2" asp-action="Index">Probar Contador V2 &rarr;</a>
+    <h3>Diagrama de Secuencia:</h3>
+    <img class="diagrama-img" src="~/img/diagrama-v2.png" onerror="this.onerror=null; this.src='/img/diagrama-v2.svg';" alt="Diagrama de secuencia Contador V2" />
+</div>
+
+<!-- Tab V3 -->
+<div id="tab-v3" class="tab-contenido">
+    <h2>Versión 3: Sesión en el Servidor (Aislamiento por Cliente)</h2>
+    <p>
+        El objeto Contador se guarda serializado en el almacén de sesión del servidor (Session State) vinculado a una cookie.
+        Cada navegador tiene su propio <strong>Id de Sesión</strong> y su propio contador independiente.
+    </p>
+    <a class="boton-prueba" asp-controller="ContadorV3" asp-action="Index">Probar Contador V3 &rarr;</a>
+    <h3>Diagrama de Secuencia:</h3>
+    <img class="diagrama-img" src="~/img/diagrama-v3.png" onerror="this.onerror=null; this.src='/img/diagrama-v3.svg';" alt="Diagrama de secuencia Contador V3" />
+</div>
+
+<!-- Tab V4 -->
+<div id="tab-v4" class="tab-contenido">
+    <h2>Versión 4: Estado en el Cliente (JavaScript / Modelo SPA)</h2>
+    <p>
+        El estado reside en la memoria RAM del navegador mediante JavaScript. El botón incrementa el valor en el cliente
+        sin generar tráfico hacia el servidor en cada clic, reflejando el modelo de las Single Page Applications.
+    </p>
+    <a class="boton-prueba" asp-controller="ContadorV4" asp-action="Index">Probar Contador V4 &rarr;</a>
+    <h3>Diagrama de Secuencia:</h3>
+    <img class="diagrama-img" src="~/img/diagrama-v4.png" onerror="this.onerror=null; this.src='/img/diagrama-v4.svg';" alt="Diagrama de secuencia Contador V4" />
+</div>
+
+
+<script>
+    function abrirPestana(evento, idTab) {
+        const contenidos = document.getElementsByClassName("tab-contenido");
+        for (let i = 0; i < contenidos.length; i++) {
+            contenidos[i].classList.remove("activo");
+        }
+
+        const botones = document.getElementsByClassName("tab-boton");
+        for (let i = 0; i < botones.length; i++) {
+            botones[i].classList.remove("activo");
+        }
+
+        document.getElementById(idTab).classList.add("activo");
+        evento.currentTarget.classList.add("activo");
+    }
+</script>
